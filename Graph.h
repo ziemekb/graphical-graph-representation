@@ -14,7 +14,6 @@ public:
     void DFS(Node* firstNode, Node* searchedNode);
 
 signals:
-    //void checkedNode(Node *checkedNode);
     void endOfDFS(QQueue<Node*> nodesToColor);
 
 private:

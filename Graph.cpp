@@ -25,7 +25,6 @@ void Graph::DFS(Node* startingNode, Node* soughtNode)
 {
     visited[startingNode] = true;
 
-    //emit checkedNode(startingNode);
     nodesToColor.enqueue(startingNode);
 
     if(startingNode == soughtNode) {

@@ -30,7 +30,6 @@ GraphView::GraphView()
     connect(nodeButton, &QRadioButton::clicked, this, [this]{edgeStartingNode = nullptr;}); //If Node button was clicked mid choosing 2nd edge reset the starting node
     connect(edgeButton, &QRadioButton::clicked, this, &GraphView::deleteCursor);
     connect(DFSButton, &QPushButton::pressed, this, [this]{clickedDFS = true;});
-    //connect(&graph, &Graph::checkedNode, this, &GraphView::getCheckedNode);
     connect(&graph, &Graph::endOfDFS, this, &GraphView::colorNodes);
 
     cursor = nullptr;
@@ -209,13 +208,6 @@ void GraphView::deletePhantomEdge()
         phantomEdge = nullptr;
     }
 }
-
-/*
-void GraphView::getCheckedNode(Node *checkedNode)
-{
-    nodesToColor.enqueue(checkedNode);
-}
-*/
 
 void GraphView::colorNodes(QQueue<Node*> nodesToColor)
 {

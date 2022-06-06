@@ -24,8 +24,6 @@ public:
 
     bool doesCollide();
 
-    //QGraphicsSimpleTextItem *nodeTextNumber; //move this to constructor
-
     ~Node();
 };
 

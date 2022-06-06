@@ -74,6 +74,5 @@ void Node::setColor(QColor color)
 Node::~Node()
 {
     nodeCount--;
-    //delete nodeTextNumber;
 }
 
