@@ -13,7 +13,7 @@
 #include <QAbstractAnimation>
 #include "Node.h"
 #include "Graph.h"
-#include "Edge.h""
+#include "Edge.h"
 
 enum dataType {
     nodeType,
@@ -33,24 +33,22 @@ public:
     QGraphicsScene *scene;
 
     void createHorizontalGroupBox();
-    QGroupBox *horizontalGroupBox; // Should this even be here?
+    QGroupBox *horizontalGroupBox;
     QRadioButton *nodeButton;
     QRadioButton *edgeButton;
     QPushButton *DFSButton;
-    void radioButtonReset(); // Should add QButtonGroup coz this function is shit
+    void radioButtonReset();
 
     Edge *edge;
-    //Node *edgeStartingNode; // Should be in Edge class
-    //Node *edgeEndingNode;   // this too
     QGraphicsLineItem *phantomEdge;
-    void createPhantomEdge(QPointF pos1, QPointF pos2);
+    void createPhantomEdge(const QPointF &startingPosition, const QPointF &endingPosition);
     void deletePhantomEdge();
 
     QGraphicsItem *cursor;
+    void updateCursor(const QPointF &pos);
     void setCursor(QGraphicsItem *item);
 
     Graph graph;
-    //QQueue<Node*> nodesToColor; // Should be in Graph class
     bool clickedDFS; // I don't like this solution
     Node *startingDFSNode; // Prob should be implemented in some other way
     Node *endingDFSNode;   // maybe as Edge *DFSEdge when starting and ending node is implemented in Edge but without
@@ -59,7 +57,6 @@ public:
     QSequentialAnimationGroup *animationGroupDFS;
 
 public slots:
-    //void getCheckedNode(Node *checkedNode); //should be deleted and functionality moved to Graph class
     void colorNodes(QQueue<Node*> nodesToColor);
     void setNodeCursor();
     void deleteCursor();

@@ -41,7 +41,6 @@ GraphView::GraphView()
     connect(&graph, &Graph::endOfDFS, this, &GraphView::colorNodes);
 
 
-
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -82,8 +81,8 @@ void GraphView::mousePressEvent(QMouseEvent *event)
     }
     else if(nodeButton->isChecked()) {
 
-        Node *node = new Node(QPointF(pos.rx(), pos.ry()));
-        node->setPos(QPointF(node->center.rx()-node->rect().width()/2, node->center.ry()-node->rect().height()/2));
+        Node *node = new Node(QPointF(pos.x(), pos.y()));
+        node->setPos(QPointF(node->center.x()-node->rect().width()/2, node->center.y()-node->rect().height()/2));
         scene->addItem(node);
 
         if(node->doesCollide()) {
@@ -106,8 +105,6 @@ void GraphView::mousePressEvent(QMouseEvent *event)
                     deletePhantomEdge();
                     edge->endingNode = clickedNode;
 
-                    //Edge *edge = new Edge(); // I could add Edge *edge to Graph.h and startingNode and endingNode to Edge code
-                                             // then reimplement addEdge(Node*, Node*) to addEdge(const Edge*) in Graph
                     edge->setLine(QLineF(edge->startingNode->center, edge->endingNode->center));
                     graph.addEdge(edge);
                     scene->addItem(edge);
@@ -132,31 +129,8 @@ void GraphView::mouseMoveEvent(QMouseEvent *event)
     QPointF pos = event->pos();
 
     if(nodeButton->isChecked()) {
+        updateCursor(pos);
 
-        QGraphicsEllipseItem *nodeCursor = dynamic_cast<QGraphicsEllipseItem*>(cursor); //this is utter shit
-        // Maybe QGraphicsEllipseItem* nodeCursorCollision(QGraphicsItem *cursor, const QPointF &pos) should be implemented?
-        if(nodeCursor) {
-            nodeCursor->setPos(QPointF(pos.rx()-nodeCursor->rect().width()/2, pos.ry()-nodeCursor->rect().height()/2));
-
-            QList<QGraphicsItem*> collidingItems = scene->collidingItems(nodeCursor);
-
-            if(collidingItems.isEmpty()) {
-               nodeCursor->setPen(QPen(Qt::green));
-               nodeCursor->show();
-            }
-            else {
-                for(auto const &e : collidingItems) {
-                    if(typeid(*e) == typeid(Node) || typeid(*e) == typeid(Edge)) {
-                        nodeCursor->setPen(QPen(Qt::red));
-                        nodeCursor->show();
-                    }
-                    else {
-                        nodeCursor->hide();
-                        break;
-                    }
-                }
-            }
-        }
     }
     else if (edgeButton->isChecked()) {
         if(edge && edge->startingNode) {
@@ -172,9 +146,9 @@ void GraphView::createHorizontalGroupBox()
     edgeButton = new QRadioButton("Edges");
     DFSButton = new QPushButton("DFS");
 
-
     horizontalGroupBox = new QGroupBox();
     QHBoxLayout *layout = new QHBoxLayout;
+
 
     layout->addWidget(nodeButton);
     layout->addWidget(edgeButton);
@@ -193,10 +167,10 @@ void GraphView::radioButtonReset()
     edgeButton->setAutoExclusive(true);
 }
 
-void GraphView::createPhantomEdge(QPointF pos1, QPointF pos2)
+void GraphView::createPhantomEdge(const QPointF &startingPosition, const QPointF &endingPosition)
 {
     phantomEdge = new QGraphicsLineItem();
-    phantomEdge->setLine(QLineF(pos1, pos2));
+    phantomEdge->setLine(QLineF(startingPosition, endingPosition));
     phantomEdge->setPen(QPen(Qt::gray));
     scene->addItem(phantomEdge);
 }
@@ -206,6 +180,33 @@ void GraphView::deletePhantomEdge()
     if(phantomEdge) {
         scene->removeItem(phantomEdge);
         phantomEdge = nullptr;
+    }
+}
+
+void GraphView::updateCursor(const QPointF &pos)
+{
+    QGraphicsEllipseItem *nodeCursor = dynamic_cast<QGraphicsEllipseItem*>(cursor);
+    if(nodeCursor) {
+        nodeCursor->setPos(pos.x()-nodeCursor->rect().width()/2, pos.y()-nodeCursor->rect().height()/2);
+
+        QList<QGraphicsItem*> collidingItems = scene->collidingItems(nodeCursor);
+
+        if(collidingItems.isEmpty()) {
+           nodeCursor->setPen(QPen(Qt::green));
+           nodeCursor->show();
+        }
+        else {
+            for(auto const &e : collidingItems) {
+                if(typeid(*e) == typeid(Node) || typeid(*e) == typeid(Edge)) {
+                    nodeCursor->setPen(QPen(Qt::red));
+                    nodeCursor->show();
+                }
+                else {
+                    nodeCursor->hide();
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -260,4 +261,3 @@ void GraphView::deleteCursor()
        cursor = nullptr;
     }
 }
-
