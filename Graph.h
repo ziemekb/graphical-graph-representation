@@ -1,8 +1,9 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "Node.h"
 #include <QQueue>
+#include "Node.h"
+#include "Edge.h"
 
 class Graph : public QObject {
 Q_OBJECT
@@ -10,6 +11,7 @@ public:
     QVector<QVector<Node*>> adjList;
 
     void addEdge(Node* node1, Node* node2);
+    void addEdge(Edge *edge);
     void addNode();
     void DFS(Node* firstNode, Node* searchedNode);
 

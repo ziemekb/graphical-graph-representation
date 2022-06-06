@@ -16,6 +16,21 @@ void Graph::addEdge(Node* node1, Node* node2)
     adjList[node2Val].push_back(node1);
 }
 
+void Graph::addEdge(Edge *edge)
+{
+    int startingNodeData = edge->startingNode->data(nodeType).value<int>();
+    int endingNodeDate = edge->endingNode->data(nodeType).value<int>();
+
+    for(int i = 0; i < adjList[edge->startingNode->data(nodeType).value<int>()].size(); ++i) {
+        if(adjList[startingNodeData][i]->data(nodeType).value<int>() == endingNodeDate) {
+            return;
+        }
+    }
+
+    adjList[startingNodeData].push_back(edge->endingNode);
+    adjList[endingNodeDate].push_back(edge->startingNode);
+}
+
 void Graph::addNode()
 {
     adjList.push_back(QVector<Node*>());

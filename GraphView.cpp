@@ -26,20 +26,20 @@ GraphView::GraphView()
     createHorizontalGroupBox();
     scene->addWidget(horizontalGroupBox);
 
-    connect(nodeButton, &QRadioButton::clicked, this, &GraphView::setNodeCursor);
-    connect(nodeButton, &QRadioButton::clicked, this, [this]{edgeStartingNode = nullptr;}); //If Node button was clicked mid choosing 2nd edge reset the starting node
-    connect(edgeButton, &QRadioButton::clicked, this, &GraphView::deleteCursor);
-    connect(DFSButton, &QPushButton::pressed, this, [this]{clickedDFS = true;});
-    connect(&graph, &Graph::endOfDFS, this, &GraphView::colorNodes);
-
+    edge = nullptr;
     cursor = nullptr;
-    edgeStartingNode = nullptr;
-    edgeEndingNode = nullptr;
     startingDFSNode = nullptr;
     endingDFSNode = nullptr;
     phantomEdge = nullptr;
     animationGroupDFS = nullptr;
     clickedDFS = false;
+
+    connect(nodeButton, &QRadioButton::clicked, this, &GraphView::setNodeCursor);
+    connect(nodeButton, &QRadioButton::clicked, this, [this]{if(edge) {edge->startingNode = nullptr;}}); //If Node button was clicked mid choosing 2nd edge reset the starting node
+    connect(edgeButton, &QRadioButton::clicked, this, &GraphView::deleteCursor);
+    connect(DFSButton, &QPushButton::pressed, this, [this]{clickedDFS = true;});
+    connect(&graph, &Graph::endOfDFS, this, &GraphView::colorNodes);
+
 
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -102,22 +102,22 @@ void GraphView::mousePressEvent(QMouseEvent *event)
 
             Node *clickedNode = dynamic_cast<Node*>(e);
             if(clickedNode) {
-                if(edgeStartingNode) {
+                if(edge && edge->startingNode) {
                     deletePhantomEdge();
-                    edgeEndingNode = clickedNode;
+                    edge->endingNode = clickedNode;
 
-                    Edge *edge = new Edge(); // I could add Edge *edge to Graph.h and startingNode and endingNode to Edge code
+                    //Edge *edge = new Edge(); // I could add Edge *edge to Graph.h and startingNode and endingNode to Edge code
                                              // then reimplement addEdge(Node*, Node*) to addEdge(const Edge*) in Graph
-                    edge->setLine(QLineF(edgeStartingNode->center, edgeEndingNode->center));
-                    graph.addEdge(edgeStartingNode, edgeEndingNode);
+                    edge->setLine(QLineF(edge->startingNode->center, edge->endingNode->center));
+                    graph.addEdge(edge);
                     scene->addItem(edge);
 
-                    edgeStartingNode = nullptr;
-                    edgeEndingNode = nullptr;
-
+                    edge->startingNode = nullptr;
+                    edge->endingNode = nullptr;
                 }
                 else {
-                    edgeStartingNode = clickedNode;
+                    edge = new Edge();
+                    edge->startingNode = clickedNode;
                 }
                 break;
             }
@@ -159,9 +159,9 @@ void GraphView::mouseMoveEvent(QMouseEvent *event)
         }
     }
     else if (edgeButton->isChecked()) {
-        if(edgeStartingNode) {
+        if(edge && edge->startingNode) {
             deletePhantomEdge();
-            createPhantomEdge(edgeStartingNode->center, event->pos());
+            createPhantomEdge(edge->startingNode->center, event->pos());
         }
     }
 }

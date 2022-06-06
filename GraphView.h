@@ -13,6 +13,7 @@
 #include <QAbstractAnimation>
 #include "Node.h"
 #include "Graph.h"
+#include "Edge.h""
 
 enum dataType {
     nodeType,
@@ -38,8 +39,9 @@ public:
     QPushButton *DFSButton;
     void radioButtonReset(); // Should add QButtonGroup coz this function is shit
 
-    Node *edgeStartingNode; // Should be in Edge class
-    Node *edgeEndingNode;   // this too
+    Edge *edge;
+    //Node *edgeStartingNode; // Should be in Edge class
+    //Node *edgeEndingNode;   // this too
     QGraphicsLineItem *phantomEdge;
     void createPhantomEdge(QPointF pos1, QPointF pos2);
     void deletePhantomEdge();
