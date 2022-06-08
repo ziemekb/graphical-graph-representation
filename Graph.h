@@ -4,6 +4,12 @@
 #include <QQueue>
 #include "Node.h"
 #include "Edge.h"
+#include "GraphView.h"
+
+enum dataType {
+    nodeType,
+    edgeType
+};
 
 class Graph : public QObject {
 Q_OBJECT
@@ -22,5 +28,7 @@ private:
     QMap <Node*, bool> visited;
     QQueue<Node*> nodesToColor;
 };
+
+
 
 #endif // GRAPH_H

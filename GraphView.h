@@ -15,10 +15,6 @@
 #include "Graph.h"
 #include "Edge.h"
 
-enum dataType {
-    nodeType,
-    edgeType
-};
 
 class GraphView : public QGraphicsView {
 
