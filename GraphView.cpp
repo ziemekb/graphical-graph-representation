@@ -89,9 +89,6 @@ void GraphView::mousePressEvent(QMouseEvent *event)
             scene->removeItem(node);
             delete node;
         }
-        else {
-            graph.addNode();
-        }
     }
     else if(edgeButton->isChecked()) {
 
