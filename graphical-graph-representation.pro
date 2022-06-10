@@ -12,6 +12,7 @@ SOURCES += \
         Edge.cpp \
         Graph.cpp \
         GraphView.cpp \
+        MainMenu.cpp \
         Node.cpp \
         main.cpp
 
@@ -24,4 +25,5 @@ HEADERS += \
     Edge.h \
     Graph.h \
     GraphView.h \
+    MainMenu.h \
     Node.h

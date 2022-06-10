@@ -12,12 +12,12 @@
 #include "Graph.h"
 #include "Node.h"
 #include "Edge.h"
+#include "MainMenu.h"
 
 
 GraphView::GraphView()
 {
     setRenderHints(QPainter::Antialiasing);
-
     scene = new QGraphicsScene(this);
     this->setScene(scene);
 
