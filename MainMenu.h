@@ -3,22 +3,42 @@
 
 #include <QGraphicsScene>
 #include <QPushButton>
-#include <QVBoxLayout>
-#include <QGroupBox>
-
+#include <QRadioButton>
+#include <QButtonGroup>
+#include <QVector>
 
 class MainMenu : public QWidget {
 
 public:
     MainMenu(QWidget *parent = nullptr);
     void createStartingMenu();
-    void createGraphCreationMenu();
     QGraphicsScene* getMainMenuScene() const;
+    QPushButton* getQuitButton() const;
+
+public slots:
+    void createGraphCreationMenu();
 
 private:
     QGraphicsScene *mainMenuScene;
+
     QPushButton *startButton;
     QPushButton *quitButton;
+
+    //Group and buttons for managing whether graph is weighted or not
+    QButtonGroup *weightButtonGroup;
+    QRadioButton *weightedButton;
+    QRadioButton *unweightedButton;
+
+    //Group and buttons for managing whether graph is directed or not
+    QButtonGroup *directionButtonGroup;
+    QRadioButton *directedButton;
+    QRadioButton *undirectedButton;
+
+    QPushButton *createGraphButton;
+    QPushButton *returnButton;
+
+    QVector<QGraphicsProxyWidget*> proxyWidgetVector;
+    void clearSceneLater();
 };
 
 #endif // MAINMENU_H

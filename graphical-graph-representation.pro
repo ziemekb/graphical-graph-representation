@@ -13,6 +13,7 @@ SOURCES += \
         Graph.cpp \
         GraphView.cpp \
         MainMenu.cpp \
+        MainWindow.cpp \
         Node.cpp \
         main.cpp
 
@@ -26,4 +27,5 @@ HEADERS += \
     Graph.h \
     GraphView.h \
     MainMenu.h \
+    MainWindow.h \
     Node.h
