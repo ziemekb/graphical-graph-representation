@@ -17,6 +17,7 @@ public:
 public slots:
     void showStartingMenu();
     void showGraphCreationMenu();
+    void resetRadioButtons();
 
 private:
     QGraphicsScene *mainMenuScene;

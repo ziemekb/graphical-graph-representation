@@ -16,6 +16,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
 
     connect(startButton, &QPushButton::clicked, this, &MainMenu::showGraphCreationMenu);
     connect(returnButton, &QPushButton::clicked, this, &MainMenu::showStartingMenu);
+    connect(returnButton, &QPushButton::clicked, this, &MainMenu::resetRadioButtons);
 }
 
 
@@ -102,6 +103,19 @@ void MainMenu::createGraphCreationMenu()
 
     createGraphButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
                       GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
+}
+
+
+void MainMenu::resetRadioButtons()
+{
+    weightButtonGroup->setExclusive(false);
+    directionButtonGroup->setExclusive(false);
+    weightedButton->setChecked(false);
+    unweightedButton->setChecked(false);
+    directedButton->setChecked(false);
+    undirectedButton->setChecked(false);
+    weightButtonGroup->setExclusive(true);
+    directionButtonGroup->setExclusive(true);
 }
 
 void MainMenu::clearSceneLater()
