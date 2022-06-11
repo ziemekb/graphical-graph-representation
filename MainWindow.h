@@ -12,10 +12,6 @@ public:
 
 private:
     MainMenu *mainMenu;
-
-public slots:
-    void quitDebug();
-
 };
 
 

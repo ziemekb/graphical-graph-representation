@@ -11,16 +11,20 @@ class MainMenu : public QWidget {
 
 public:
     MainMenu(QWidget *parent = nullptr);
-    void createStartingMenu();
     QGraphicsScene* getMainMenuScene() const;
     QPushButton* getQuitButton() const;
 
 public slots:
-    void createGraphCreationMenu();
+    void showStartingMenu();
+    void showGraphCreationMenu();
 
 private:
     QGraphicsScene *mainMenuScene;
 
+    void createGraphCreationMenu();
+    void createStartingMenu();
+
+    //Starting menu buttons
     QPushButton *startButton;
     QPushButton *quitButton;
 
@@ -34,9 +38,11 @@ private:
     QRadioButton *directedButton;
     QRadioButton *undirectedButton;
 
+    //Graph creation menu buttons
     QPushButton *createGraphButton;
     QPushButton *returnButton;
 
+    //useless for now
     QVector<QGraphicsProxyWidget*> proxyWidgetVector;
     void clearSceneLater();
 };

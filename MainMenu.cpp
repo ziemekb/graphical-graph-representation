@@ -10,12 +10,43 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
     mainMenuScene->setSceneRect(0, 0, GraphView::SCREEN_WIDTH, GraphView::SCREEN_HEIGHT);
 
     createStartingMenu();
+    createGraphCreationMenu();
+
+    showStartingMenu();
+
+    connect(startButton, &QPushButton::clicked, this, &MainMenu::showGraphCreationMenu);
+    connect(returnButton, &QPushButton::clicked, this, &MainMenu::showStartingMenu);
+}
+
+
+void MainMenu::showGraphCreationMenu()
+{
+    startButton->hide();
+    quitButton->hide();
+
+    createGraphButton->show();
+    returnButton->show();
+    weightedButton->show();
+    unweightedButton->show();
+    directedButton->show();
+    undirectedButton->show();
+}
+
+void MainMenu::showStartingMenu()
+{
+    createGraphButton->hide();
+    returnButton->hide();
+    weightedButton->hide();
+    unweightedButton->hide();
+    directedButton->hide();
+    undirectedButton->hide();
+
+    startButton->show();
+    quitButton->show();
 }
 
 void MainMenu::createStartingMenu()
 {
-    clearSceneLater();
-
     startButton = new QPushButton("Start");
     quitButton = new QPushButton("Quit");
 
@@ -26,14 +57,10 @@ void MainMenu::createStartingMenu()
                       GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
     quitButton->move(GraphView::SCREEN_WIDTH/2 - quitButton->rect().width()/2,
                      GraphView::SCREEN_HEIGHT/2 - quitButton->rect().height()/2 + 25);
-
-    connect(startButton, &QPushButton::clicked, this, &MainMenu::createGraphCreationMenu);
 }
 
 void MainMenu::createGraphCreationMenu()
 {
-    clearSceneLater();
-
     createGraphButton = new QPushButton("create graph");
     returnButton = new QPushButton("return");
 
@@ -75,8 +102,6 @@ void MainMenu::createGraphCreationMenu()
 
     createGraphButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
                       GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
-
-    connect(returnButton, &QPushButton::clicked, this, &MainMenu::createStartingMenu);
 }
 
 void MainMenu::clearSceneLater()
