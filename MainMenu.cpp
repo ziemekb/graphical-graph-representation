@@ -1,13 +1,12 @@
-#include "MainMenu.h"
-#include "GraphView.h"
 #include <QGraphicsProxyWidget>
 #include <QVector>
-
+#include "GraphView.h"
+#include "MainMenu.h"
 
 MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
 {
     mainMenuScene = new QGraphicsScene;
-    mainMenuScene->setSceneRect(0, 0, GraphView::SCREEN_WIDTH, GraphView::SCREEN_HEIGHT);
+    mainMenuScene->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     createStartingMenu();
     createGraphCreationMenu();
@@ -17,6 +16,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
     connect(startButton, &QPushButton::clicked, this, &MainMenu::showGraphCreationMenu);
     connect(returnButton, &QPushButton::clicked, this, &MainMenu::showStartingMenu);
     connect(returnButton, &QPushButton::clicked, this, &MainMenu::resetRadioButtons);
+    connect(createGraphButton, &QPushButton::clicked, this, &MainMenu::clickedCreateGraph);
 }
 
 
@@ -54,10 +54,10 @@ void MainMenu::createStartingMenu()
     proxyWidgetVector.push_back(mainMenuScene->addWidget(startButton));
     proxyWidgetVector.push_back(mainMenuScene->addWidget(quitButton));
 
-    startButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
-    quitButton->move(GraphView::SCREEN_WIDTH/2 - quitButton->rect().width()/2,
-                     GraphView::SCREEN_HEIGHT/2 - quitButton->rect().height()/2 + 25);
+    startButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
+    quitButton->move(Constansts::SCREEN_WIDTH/2 - quitButton->rect().width()/2,
+                     Constansts::SCREEN_HEIGHT/2 - quitButton->rect().height()/2 + 25);
 }
 
 void MainMenu::createGraphCreationMenu()
@@ -86,23 +86,23 @@ void MainMenu::createGraphCreationMenu()
     proxyWidgetVector.push_back(mainMenuScene->addWidget(createGraphButton));
     proxyWidgetVector.push_back(mainMenuScene->addWidget(returnButton));
 
-    weightedButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
+    weightedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
 
-    unweightedButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
+    unweightedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
 
-    directedButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
+    directedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
 
-    undirectedButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
+    undirectedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
 
-    returnButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
+    returnButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
 
-    createGraphButton->move(GraphView::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      GraphView::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
+    createGraphButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
 }
 
 
@@ -116,6 +116,13 @@ void MainMenu::resetRadioButtons()
     undirectedButton->setChecked(false);
     weightButtonGroup->setExclusive(true);
     directionButtonGroup->setExclusive(true);
+}
+
+void MainMenu::clickedCreateGraph()
+{
+    // here graphType = ... depending on chosen radio buttons options
+    //graphType = unweightedUndirected; // for now
+    emit createGraphSignal(unweightedUndirected);
 }
 
 void MainMenu::clearSceneLater()
@@ -135,5 +142,10 @@ QGraphicsScene *MainMenu::getMainMenuScene() const
 QPushButton *MainMenu::getQuitButton() const
 {
     return quitButton;
+}
+
+QPushButton *MainMenu::getCreateGraphButton() const
+{
+    return createGraphButton;
 }
 

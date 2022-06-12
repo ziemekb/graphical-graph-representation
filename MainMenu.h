@@ -6,18 +6,25 @@
 #include <QRadioButton>
 #include <QButtonGroup>
 #include <QVector>
+#include "MainWindow.h"
 
 class MainMenu : public QWidget {
+Q_OBJECT
 
 public:
     MainMenu(QWidget *parent = nullptr);
     QGraphicsScene* getMainMenuScene() const;
     QPushButton* getQuitButton() const;
+    QPushButton* getCreateGraphButton() const;
 
 public slots:
     void showStartingMenu();
     void showGraphCreationMenu();
     void resetRadioButtons();
+    void clickedCreateGraph();
+
+signals:
+    void createGraphSignal(graphType graphType);
 
 private:
     QGraphicsScene *mainMenuScene;
@@ -43,6 +50,7 @@ private:
     QPushButton *createGraphButton;
     QPushButton *returnButton;
 
+    //graphType graphType;
     //useless for now
     QVector<QGraphicsProxyWidget*> proxyWidgetVector;
     void clearSceneLater();

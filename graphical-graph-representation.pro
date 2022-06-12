@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
         Edge.cpp \
         Graph.cpp \
+        GraphRepresentation.cpp \
         GraphView.cpp \
         MainMenu.cpp \
         MainWindow.cpp \
@@ -25,6 +26,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Edge.h \
     Graph.h \
+    GraphRepresentation.h \
     GraphView.h \
     MainMenu.h \
     MainWindow.h \
