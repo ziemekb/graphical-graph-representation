@@ -50,7 +50,7 @@ private:
     QPushButton *createGraphButton;
     QPushButton *returnButton;
 
-    //graphType graphType;
+    graphType type;
     //useless for now
     QVector<QGraphicsProxyWidget*> proxyWidgetVector;
     void clearSceneLater();

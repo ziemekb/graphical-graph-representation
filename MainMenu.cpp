@@ -120,9 +120,24 @@ void MainMenu::resetRadioButtons()
 
 void MainMenu::clickedCreateGraph()
 {
-    // here graphType = ... depending on chosen radio buttons options
-    //graphType = unweightedUndirected; // for now
-    emit createGraphSignal(unweightedUndirected);
+    if(!weightButtonGroup->checkedButton() || !directionButtonGroup->checkedButton()) {
+        return;
+    }
+
+    if(unweightedButton->isChecked() && undirectedButton->isChecked()) {
+        type = unweightedUndirected;
+    }
+    else if(unweightedButton->isChecked() && directedButton->isChecked()) {
+        type = unweightedDirected;
+    }
+    else if(weightedButton->isChecked() && undirectedButton->isChecked()) {
+        type = weightedUndirected;
+    }
+    else if(weightedButton->isChecked() && directedButton->isChecked()) {
+        type = weightedDirected;
+    }
+
+    emit createGraphSignal(type);
 }
 
 void MainMenu::clearSceneLater()
