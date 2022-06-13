@@ -6,6 +6,7 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QComboBox>
+#include <QPushButton>
 #include "MainWindow.h"
 
 enum buttonID {
@@ -27,6 +28,7 @@ private:
     void generateToolBar(const graphType type);
 
     QComboBox *algorithmComboBox;
+    QPushButton *startAlgorithmButton;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };
