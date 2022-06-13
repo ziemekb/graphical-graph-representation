@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/circle_icon.png</file>
+        <file>assets/edge_icon.png</file>
+    </qresource>
+</RCC>

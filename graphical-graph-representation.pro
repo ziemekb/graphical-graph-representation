@@ -31,3 +31,6 @@ HEADERS += \
     MainMenu.h \
     MainWindow.h \
     Node.h
+
+RESOURCES += \
+    resources.qrc

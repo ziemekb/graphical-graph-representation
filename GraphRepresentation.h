@@ -3,16 +3,26 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QToolBar>
+#include <QToolButton>
 #include "MainWindow.h"
+
+enum buttonID {
+    nodeButtonID,
+    edgeButtonID
+};
 
 class GraphRepresentation : public QWidget {
 public:
-    GraphRepresentation(graphType graphType);
+    GraphRepresentation(const graphType type);
     QGraphicsScene *getScene() const;
 
 private:
     QGraphicsScene *scene;
-    //AbstractGraph graph; in constructor - graph = graphFactory.createGraph(graphType); -> graphType needed in constructor
+    QToolBar *graphToolBar;
+    QButtonGroup *graphBuildButtonGroup;
+    void generateToolBar(const graphType type);
+    //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };
 
