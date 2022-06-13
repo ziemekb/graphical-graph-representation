@@ -1,4 +1,5 @@
 #include <GraphView.h>
+#include <QVBoxLayout>>
 #include "GraphRepresentation.h"
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
@@ -30,6 +31,19 @@ void GraphRepresentation::generateToolBar(const graphType type)
     graphBuildButtonGroup->addButton(edgeButton, edgeButtonID);
 
     graphBuildButtonGroup->setExclusive(true);
+
+    algorithmComboBox = new QComboBox;
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(algorithmComboBox);
+    //setLayout(layout);
+
+    algorithmComboBox->addItem("DFS");
+    algorithmComboBox->addItem("BFS");
+    algorithmComboBox->addItem("Dijkstra's");
+
+    //graphToolBar->setLayout(layout);
+    graphToolBar->addWidget(algorithmComboBox);
 
     this->scene->addWidget(graphToolBar);
 }
