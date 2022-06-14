@@ -7,7 +7,7 @@ MainWindow::MainWindow()
 {
     mainMenu = new MainMenu;
 
-    this->setScene(mainMenu->getMainMenuScene());
+    this->setScene(mainMenu);
 
     connect(mainMenu->getQuitButton(), &QPushButton::clicked, this, &MainWindow::close);
     connect(mainMenu, &MainMenu::createGraphSignal, this, &MainWindow::changeToGraphScene);

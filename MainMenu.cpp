@@ -3,10 +3,9 @@
 #include "GraphView.h"
 #include "MainMenu.h"
 
-MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
+MainMenu::MainMenu(QWidget *parent)
 {
-    mainMenuScene = new QGraphicsScene;
-    mainMenuScene->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
+    this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     createStartingMenu();
     createGraphCreationMenu();
@@ -51,8 +50,8 @@ void MainMenu::createStartingMenu()
     startButton = new QPushButton("Start");
     quitButton = new QPushButton("Quit");
 
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(startButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(quitButton));
+    proxyWidgetVector.push_back(this->addWidget(startButton));
+    proxyWidgetVector.push_back(this->addWidget(quitButton));
 
     startButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2,
                       Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
@@ -79,12 +78,12 @@ void MainMenu::createGraphCreationMenu()
     directionButtonGroup->addButton(directedButton);
     directionButtonGroup->addButton(undirectedButton);
 
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(weightedButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(unweightedButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(directedButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(undirectedButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(createGraphButton));
-    proxyWidgetVector.push_back(mainMenuScene->addWidget(returnButton));
+    proxyWidgetVector.push_back(this->addWidget(weightedButton));
+    proxyWidgetVector.push_back(this->addWidget(unweightedButton));
+    proxyWidgetVector.push_back(this->addWidget(directedButton));
+    proxyWidgetVector.push_back(this->addWidget(undirectedButton));
+    proxyWidgetVector.push_back(this->addWidget(createGraphButton));
+    proxyWidgetVector.push_back(this->addWidget(returnButton));
 
     weightedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
                       Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
@@ -147,11 +146,6 @@ void MainMenu::clearSceneLater()
     }
     proxyWidgetVector.clear();
 
-}
-
-QGraphicsScene *MainMenu::getMainMenuScene() const
-{
-    return mainMenuScene;
 }
 
 QPushButton *MainMenu::getQuitButton() const

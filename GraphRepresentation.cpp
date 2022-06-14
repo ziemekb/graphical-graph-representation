@@ -1,9 +1,10 @@
 #include <GraphView.h>
-#include <QVBoxLayout>>
+#include <QVBoxLayout>
+#include <QDebug>
 #include "GraphRepresentation.h"
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
-    scene = new QGraphicsScene;
+    scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     generateToolBar(type);

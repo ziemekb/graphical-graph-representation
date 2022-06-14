@@ -8,12 +8,11 @@
 #include <QVector>
 #include "MainWindow.h"
 
-class MainMenu : public QWidget {
+class MainMenu : public QGraphicsScene {
 Q_OBJECT
 
 public:
     MainMenu(QWidget *parent = nullptr);
-    QGraphicsScene* getMainMenuScene() const;
     QPushButton* getQuitButton() const;
     QPushButton* getCreateGraphButton() const;
 
@@ -27,7 +26,6 @@ signals:
     void createGraphSignal(graphType graphType);
 
 private:
-    QGraphicsScene *mainMenuScene;
 
     void createGraphCreationMenu();
     void createStartingMenu();

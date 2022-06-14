@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include "MainWindow.h"
+#include "NodeCursor.h"
 
 enum buttonID {
     nodeButtonID,
@@ -29,6 +30,8 @@ private:
 
     QComboBox *algorithmComboBox;
     QPushButton *startAlgorithmButton;
+
+    NodeCursor cursor;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };
