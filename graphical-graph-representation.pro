@@ -16,6 +16,7 @@ SOURCES += \
         MainMenu.cpp \
         MainWindow.cpp \
         Node.cpp \
+        NodeCursor.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -24,13 +25,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    AbstractCursor.h \
     Edge.h \
     Graph.h \
     GraphRepresentation.h \
     GraphView.h \
     MainMenu.h \
     MainWindow.h \
-    Node.h
+    Node.h \
+    NodeCursor.h
 
 RESOURCES += \
     resources.qrc
