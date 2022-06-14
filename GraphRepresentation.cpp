@@ -4,8 +4,7 @@
 #include "GraphRepresentation.h"
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
-    scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
+    this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     generateToolBar(type);
 }
@@ -55,11 +54,5 @@ void GraphRepresentation::generateToolBar(const graphType type)
 
     graphToolBar->addWidget(startAlgorithmButton);
 
-    this->scene->addWidget(graphToolBar);
+    this->addWidget(graphToolBar);
 }
-
-QGraphicsScene *GraphRepresentation::getScene() const
-{
-    return scene;
-}
-

@@ -15,14 +15,11 @@ enum buttonID {
     edgeButtonID
 };
 
-class GraphRepresentation : public QWidget {
+class GraphRepresentation : public QGraphicsScene {
 public:
     GraphRepresentation(const graphType type);
-    QGraphicsScene *getScene() const;
 
 private:
-    QGraphicsScene *scene;
-
     QToolBar *graphToolBar;
 
     QButtonGroup *graphBuildButtonGroup;

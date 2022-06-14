@@ -16,7 +16,7 @@ MainWindow::MainWindow()
 void MainWindow::changeToGraphScene(graphType graphType)
 {
     graphRep = new GraphRepresentation(graphType);
-    this->setScene(graphRep->getScene());
+    this->setScene(graphRep);
 }
 
 
