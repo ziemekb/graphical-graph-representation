@@ -1,5 +1,6 @@
 #include <QPen>
 #include <QToolBar>
+#include <QGraphicsProxyWidget>
 #include "NodeCursor.h"
 #include "Node.h"
 #include "Edge.h"
@@ -12,6 +13,8 @@ NodeCursor::NodeCursor()
     QGraphicsEllipseItem *tempCursor = static_cast<QGraphicsEllipseItem*>(cursor);
 
     tempCursor->setRect(0, 0, Node::nodeWidth, Node::nodeHeight);
+    tempCursor->setPen(QPen(Qt::green));
+    tempCursor->hide();
 }
 
 void NodeCursor::updateCursor(const QPointF &pos)
@@ -22,13 +25,15 @@ void NodeCursor::updateCursor(const QPointF &pos)
 
     QList<QGraphicsItem*> collidingItems = tempCursor->collidingItems();
 
+    qDebug() << collidingItems;
+
     if(collidingItems.isEmpty()) {
        tempCursor->setPen(QPen(Qt::green));
        tempCursor->show();
     }
     else {
         for(auto const &e : collidingItems) {
-            if(typeid(*e) == typeid(QToolBar)) {
+            if(typeid(*e) == typeid(QGraphicsProxyWidget)) {
                 tempCursor->hide();
                 break;
             }

@@ -7,6 +7,9 @@
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
+    cursor = new NodeCursor;
+    this->addItem(cursor->getCursor());
+
     generateToolBar(type);
 }
 

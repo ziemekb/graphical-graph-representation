@@ -29,7 +29,7 @@ private:
     QComboBox *algorithmComboBox;
     QPushButton *startAlgorithmButton;
 
-    NodeCursor *cursor;
+    AbstractCursor *cursor;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };
