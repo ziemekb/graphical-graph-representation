@@ -12,7 +12,8 @@
 
 enum buttonID {
     nodeButtonID,
-    edgeButtonID
+    edgeButtonID,
+    destroyButtonId
 };
 
 class GraphRepresentation : public QGraphicsScene {

@@ -25,23 +25,28 @@ void GraphRepresentation::generateToolBar(const graphType type)
     //Adding buttons associated with graph creation
     QToolButton *nodeButton = new QToolButton(graphToolBar);
     QToolButton *edgeButton = new QToolButton(graphToolBar);
+    QToolButton *destroyButton = new QToolButton(graphToolBar);
 
     nodeButton->setIcon(QIcon(":/assets/circle_icon.png"));
     edgeButton->setIcon(QIcon(":/assets/edge_icon.png"));
+    destroyButton->setIcon(QIcon(":/assets/hammer_icon.png"));
 
     nodeButton->setCheckable(true);
     edgeButton->setCheckable(true);
+    destroyButton->setCheckable(true);
 
     //Organizing buttons in a button group
     graphBuildButtonGroup = new QButtonGroup;
 
     graphBuildButtonGroup->addButton(nodeButton, nodeButtonID);
     graphBuildButtonGroup->addButton(edgeButton, edgeButtonID);
+    graphBuildButtonGroup->addButton(destroyButton, destroyButtonId);
 
     //Adding buttons to QToolBar
 
     graphToolBar->addWidget(nodeButton);
     graphToolBar->addWidget(edgeButton);
+    graphToolBar->addWidget(destroyButton);
 
     graphBuildButtonGroup->setExclusive(true);
 
