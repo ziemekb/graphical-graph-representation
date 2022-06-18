@@ -23,7 +23,7 @@ public slots:
     void clickedCreateGraph();
 
 signals:
-    void createGraphSignal(graphType graphType);
+    void createGraphSignal(graphType type);
 
 private:
 

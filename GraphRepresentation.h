@@ -18,6 +18,7 @@ enum buttonID {
 class GraphRepresentation : public QGraphicsScene {
 public:
     GraphRepresentation(const graphType type);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QToolBar *graphToolBar;
@@ -28,7 +29,7 @@ private:
     QComboBox *algorithmComboBox;
     QPushButton *startAlgorithmButton;
 
-    NodeCursor cursor;
+    NodeCursor *cursor;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };

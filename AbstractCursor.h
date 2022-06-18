@@ -7,6 +7,7 @@ class AbstractCursor {
 
 public:
     virtual void updateCursor(const QPointF &pos) = 0;
+    QGraphicsItem* getCursor() const;
     //virtual ~AbstractCursor();
 
 protected:

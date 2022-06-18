@@ -33,7 +33,7 @@ private:
     GraphRepresentation *graphRep;
 
 public slots:
-    void changeToGraphScene(graphType graphType);
+    void changeToGraphScene(graphType type);
 };
 
 

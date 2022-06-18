@@ -13,9 +13,9 @@ MainWindow::MainWindow()
     connect(mainMenu, &MainMenu::createGraphSignal, this, &MainWindow::changeToGraphScene);
 }
 
-void MainWindow::changeToGraphScene(graphType graphType)
+void MainWindow::changeToGraphScene(graphType type)
 {
-    graphRep = new GraphRepresentation(graphType);
+    graphRep = new GraphRepresentation(type);
     this->setScene(graphRep);
 }
 

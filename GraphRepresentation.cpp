@@ -1,6 +1,7 @@
-#include <GraphView.h>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QButtonGroup>
+#include <QGraphicsSceneMouseEvent>
 #include "GraphRepresentation.h"
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
@@ -9,8 +10,15 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     generateToolBar(type);
 }
 
+void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsScene::mouseMoveEvent(event);
+}
+
 void GraphRepresentation::generateToolBar(const graphType type)
 {
+    graphToolBar = new QToolBar();
+
     //Adding buttons associated with graph creation
     QToolButton *nodeButton = new QToolButton(graphToolBar);
     QToolButton *edgeButton = new QToolButton(graphToolBar);
@@ -28,7 +36,6 @@ void GraphRepresentation::generateToolBar(const graphType type)
     graphBuildButtonGroup->addButton(edgeButton, edgeButtonID);
 
     //Adding buttons to QToolBar
-    graphToolBar = new QToolBar();
 
     graphToolBar->addWidget(nodeButton);
     graphToolBar->addWidget(edgeButton);
