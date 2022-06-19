@@ -9,12 +9,8 @@
 #include <QPushButton>
 #include "MainWindow.h"
 #include "NodeCursor.h"
+#include "BuildToolsManager.h"
 
-enum buttonID {
-    nodeButtonID,
-    edgeButtonID,
-    destroyButtonId
-};
 
 class GraphRepresentation : public QGraphicsScene {
 public:
@@ -30,7 +26,7 @@ private:
     QComboBox *algorithmComboBox;
     QPushButton *startAlgorithmButton;
 
-    AbstractCursor *cursor;
+    BuildToolsManager buildToolsManager;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 };

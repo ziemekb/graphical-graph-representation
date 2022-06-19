@@ -25,8 +25,6 @@ void NodeCursor::updateCursor(const QPointF &pos)
 
     QList<QGraphicsItem*> collidingItems = tempCursor->collidingItems();
 
-    qDebug() << collidingItems;
-
     if(collidingItems.isEmpty()) {
        tempCursor->setPen(QPen(Qt::green));
        tempCursor->show();

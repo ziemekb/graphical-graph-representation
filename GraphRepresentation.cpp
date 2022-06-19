@@ -7,14 +7,16 @@
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
-    cursor = new NodeCursor;
-    this->addItem(cursor->getCursor());
+    this->addItem(buildToolsManager.getDestructionCursor()->getCursor());
+    this->addItem(buildToolsManager.getNodeCursor()->getCursor());
 
     generateToolBar(type);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    buildToolsManager.update(static_cast<buttonID>(graphBuildButtonGroup->checkedId()), event->scenePos());
+
     QGraphicsScene::mouseMoveEvent(event);
 }
 

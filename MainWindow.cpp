@@ -5,6 +5,7 @@
 
 MainWindow::MainWindow()
 {
+    setRenderHints(QPainter::Antialiasing);
     mainMenu = new MainMenu;
 
     this->setScene(mainMenu);

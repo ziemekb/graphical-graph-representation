@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
         AbstractCursor.cpp \
+        BuildToolsManager.cpp \
         DestructionCursor.cpp \
         Edge.cpp \
         Graph.cpp \
@@ -28,6 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     AbstractCursor.h \
+    BuildToolsManager.h \
     DestructionCursor.h \
     Edge.h \
     Graph.h \
