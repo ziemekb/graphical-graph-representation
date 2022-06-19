@@ -1,44 +1,53 @@
 #include <QPen>
 #include <QToolBar>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsSceneMouseEvent>
 #include "NodeCursor.h"
-#include "Node.h"
 #include "Edge.h"
 
 
 NodeCursor::NodeCursor()
 {
-    cursor = new QGraphicsEllipseItem; //check what happens when passing this as a parent later in GraphRepresentation
-
-    QGraphicsEllipseItem *tempCursor = static_cast<QGraphicsEllipseItem*>(cursor);
-
-    tempCursor->setRect(0, 0, Node::nodeWidth, Node::nodeHeight);
-    tempCursor->setPen(QPen(Qt::green));
-    tempCursor->hide();
+    this->setRect(0, 0, Node::nodeWidth, Node::nodeHeight);
+    this->setPen(QPen(Qt::green));
+    this->hide();
+    this->canPlace = false;
 }
 
 void NodeCursor::updateCursor(const QPointF &pos)
 {
-    QGraphicsEllipseItem *tempCursor = static_cast<QGraphicsEllipseItem*>(cursor);
+    this->setPos(pos.x()-Node::nodeWidth/2, pos.y()-Node::nodeHeight/2);
 
-    tempCursor->setPos(pos.x()-Node::nodeWidth/2, pos.y()-Node::nodeHeight/2);
-
-    QList<QGraphicsItem*> collidingItems = tempCursor->collidingItems();
+    QList<QGraphicsItem*> collidingItems = this->collidingItems();
 
     if(collidingItems.isEmpty()) {
-       tempCursor->setPen(QPen(Qt::green));
-       tempCursor->show();
+       this->setPen(QPen(Qt::green));
+       this->show();
+       this->canPlace = true;
     }
     else {
         for(auto const &e : collidingItems) {
             if(typeid(*e) == typeid(QGraphicsProxyWidget)) {
-                tempCursor->hide();
+                this->hide();
+                this->canPlace = false;
                 break;
             }
             else if(typeid(*e) == typeid(Node) || typeid(*e) == typeid(Edge)) {
-                tempCursor->setPen(QPen(Qt::red));
-                tempCursor->show();
+                this->setPen(QPen(Qt::red));
+                this->show();
+                this->canPlace = false;
             }
         }
+    }
+}
+
+void NodeCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF pos = event->scenePos();
+
+    if(canPlace) {
+        Node *node = new Node(QPointF(pos.x(), pos.y()));
+        node->setPos(QPointF(node->center.x()-node->rect().width()/2, node->center.y()-node->rect().height()/2));
+        emit nodeToBePlaced(node);
     }
 }

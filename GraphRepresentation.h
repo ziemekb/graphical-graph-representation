@@ -29,6 +29,9 @@ private:
     BuildToolsManager buildToolsManager;
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
+
+public slots:
+    void placeGraphicsItem(QGraphicsItem *item);
 };
 
 

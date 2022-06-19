@@ -7,8 +7,10 @@
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
+    connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
+
     this->addItem(buildToolsManager.getDestructionCursor()->getCursor());
-    this->addItem(buildToolsManager.getNodeCursor()->getCursor());
+    this->addItem(buildToolsManager.getNodeCursor());
 
     generateToolBar(type);
 }
@@ -72,4 +74,9 @@ void GraphRepresentation::generateToolBar(const graphType type)
     graphToolBar->addWidget(startAlgorithmButton);
 
     this->addWidget(graphToolBar);
+}
+
+void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
+{
+    this->addItem(item);
 }
