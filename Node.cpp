@@ -44,8 +44,6 @@ bool Node::doesCollide()
 {
     QList<QGraphicsItem*> collidingItems = scene()->collidingItems(this);
 
-    //qDebug() << collidingItems;
-
     for(auto const &e : collidingItems) {
         if(typeid(*e) == typeid(Node)) {
             qDebug() << "colliding node";
