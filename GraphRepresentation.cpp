@@ -9,7 +9,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
 
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
 
-    this->addItem(buildToolsManager.getDestructionCursor()->getCursor());
+    this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
 
     generateToolBar(type);

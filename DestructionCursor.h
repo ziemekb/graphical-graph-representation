@@ -3,10 +3,11 @@
 
 #include "AbstractCursor.h"
 
-class DestructionCursor : public AbstractCursor {
+class DestructionCursor : public QObject, public QGraphicsPixmapItem {
+Q_OBJECT
 public:
     DestructionCursor();
-    void updateCursor(const QPointF &pos) override;
+    void updateCursor(const QPointF &pos);
 private:
     int pixmapHeight;
     int pixmapWidth;
