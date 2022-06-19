@@ -1,7 +1,6 @@
 #ifndef NODECURSOR_H
 #define NODECURSOR_H
 
-#include "AbstractCursor.h"
 #include "Node.h"
 
 class NodeCursor : public QObject, public QGraphicsEllipseItem {

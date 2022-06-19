@@ -1,7 +1,8 @@
 #ifndef DESTRUCTIONCURSOR_H
 #define DESTRUCTIONCURSOR_H
 
-#include "AbstractCursor.h"
+#include <QObject>
+#include <QGraphicsPixmapItem>
 
 class DestructionCursor : public QObject, public QGraphicsPixmapItem {
 Q_OBJECT
