@@ -13,9 +13,11 @@
 
 
 class GraphRepresentation : public QGraphicsScene {
+Q_OBJECT
 public:
     GraphRepresentation(const graphType type);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QToolBar *graphToolBar;
@@ -27,11 +29,15 @@ private:
     QPushButton *startAlgorithmButton;
 
     BuildToolsManager buildToolsManager;
+    void checkForPhantomEdgeNode(const QPointF &pos);
     //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
     //GraphFactory *graphFactory;
 
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);
+
+signals:
+    void clickedNode(const QPointF &pos, Node *node);
 };
 
 

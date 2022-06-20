@@ -8,7 +8,7 @@ BuildToolsManager::BuildToolsManager()
     phantomEdge = new PhantomEdge;
 }
 
-void BuildToolsManager::update(buttonID checkedID, const QPointF &pos, Node *node)
+void BuildToolsManager::update(buttonID checkedID, const QPointF &pos)
 {
     if(checkedID == nodeButtonID) {
         nodeCursor->updateCursor(pos);
@@ -17,9 +17,7 @@ void BuildToolsManager::update(buttonID checkedID, const QPointF &pos, Node *nod
         destructionCursor->updateCursor(pos);
     }
     else if(checkedID == edgeButtonID) {
-        if(node) {
-            // ... to be continued
-        }
+        phantomEdge->update(pos);
     }
 
 }

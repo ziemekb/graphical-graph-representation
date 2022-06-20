@@ -15,7 +15,7 @@ enum buttonID {
 class BuildToolsManager {
 public:
     BuildToolsManager();
-    void update(buttonID checkedID, const QPointF &pos, Node *node = nullptr);
+    void update(buttonID checkedID, const QPointF &pos);
     NodeCursor* getNodeCursor() const;
     DestructionCursor* getDestructionCursor() const;
     PhantomEdge* getPhantomEdge() const;

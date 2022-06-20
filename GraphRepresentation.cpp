@@ -3,14 +3,17 @@
 #include <QButtonGroup>
 #include <QGraphicsSceneMouseEvent>
 #include "GraphRepresentation.h"
+#include "PhantomEdge.h"
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
+    connect(this, &GraphRepresentation::clickedNode, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
 
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
+    this->addItem(buildToolsManager.getPhantomEdge());
 
     generateToolBar(type);
 }
@@ -20,6 +23,13 @@ void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     buildToolsManager.update(static_cast<buttonID>(graphBuildButtonGroup->checkedId()), event->scenePos());
 
     QGraphicsScene::mouseMoveEvent(event);
+}
+
+void GraphRepresentation::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    checkForPhantomEdgeNode(event->scenePos());
+
+    QGraphicsScene::mousePressEvent(event);
 }
 
 void GraphRepresentation::generateToolBar(const graphType type)
@@ -74,6 +84,23 @@ void GraphRepresentation::generateToolBar(const graphType type)
     graphToolBar->addWidget(startAlgorithmButton);
 
     this->addWidget(graphToolBar);
+}
+
+void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
+{
+    if(graphBuildButtonGroup->checkedId() != edgeButtonID) {
+        return;
+    }
+
+    QList itemsAt = items(pos);
+
+    for(auto const &e : itemsAt) {
+        Node *node = dynamic_cast<Node*>(e);
+        if(node) {
+            emit clickedNode(pos, node);
+            break;
+        }
+    }
 }
 
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
