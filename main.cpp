@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     */
 
     MainWindow *mainWindow = new MainWindow;
-    mainWindow->show();
+    mainWindow->show();    
 
     return a.exec();
 }

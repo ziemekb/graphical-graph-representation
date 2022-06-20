@@ -7,8 +7,9 @@
 
 DestructionCursor::DestructionCursor()
 {
-    QPixmap destructionPixmap(":/assets/hammer_icon.png");
+    QPixmap destructionPixmap(":/assets/hammer_icon2.png");
 
+    //this->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     destructionPixmap = destructionPixmap.scaled(QSize(40, 40), Qt::KeepAspectRatio);
 
     this->pixmapHeight = destructionPixmap.height();
@@ -38,6 +39,22 @@ void DestructionCursor::updateCursor(const QPointF &pos)
     findItemsToBeDestroyed();
 }
 
+void DestructionCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << itemsToBeDestroyed;
+
+    for(auto const &e : itemsToBeDestroyed) {
+
+        if(typeid(*e) == typeid(Node) || typeid(*e) == typeid(Edge)) {
+            emit graphicsItemToRemove(e);
+        }
+    }
+
+    itemsToBeDestroyed.clear();
+
+    QGraphicsPixmapItem::mousePressEvent(event);
+}
+
 void DestructionCursor::findItemsToBeDestroyed()
 {
     setHoveredOnItemsPen(Qt::black);
@@ -52,12 +69,12 @@ void DestructionCursor::setHoveredOnItemsPen(QColor color)
     for(auto const &e : itemsToBeDestroyed) {
 
         Node *node = dynamic_cast<Node*>(e);
+        Edge *edge = dynamic_cast<Edge*>(e);
+
         if(node) {
             node->setPen(QPen(color));
         }
-
-        Edge *edge = dynamic_cast<Edge*>(e);
-        if(edge) {
+        else if(edge) {
             edge->setPen(QPen(color));
         }
     }

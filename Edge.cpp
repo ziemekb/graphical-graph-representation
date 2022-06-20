@@ -17,8 +17,8 @@ Edge::Edge(Node *startingNode, Node *endingNode, int weight)
 
 Edge::~Edge()
 {
-    delete startingNode;
-    delete endingNode;
+    startingNode = nullptr;
+    endingNode = nullptr;
 }
 
 

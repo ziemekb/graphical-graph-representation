@@ -11,6 +11,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(this, &GraphRepresentation::clickedNode, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
     connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
+    connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
 
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
@@ -30,6 +31,10 @@ void GraphRepresentation::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     checkForPhantomEdgeNode(event->scenePos());
 
+    if(graphBuildButtonGroup->checkedId() == destroyButtonId) {
+        emit clickedDestroy();
+    }
+
     QGraphicsScene::mousePressEvent(event);
 }
 
@@ -44,7 +49,7 @@ void GraphRepresentation::generateToolBar(const graphType type)
 
     nodeButton->setIcon(QIcon(":/assets/circle_icon.png"));
     edgeButton->setIcon(QIcon(":/assets/edge_icon.png"));
-    destroyButton->setIcon(QIcon(":/assets/hammer_icon.png"));
+    destroyButton->setIcon(QIcon(":/assets/hammer_icon2.png"));
 
     nodeButton->setCheckable(true);
     edgeButton->setCheckable(true);
@@ -107,4 +112,14 @@ void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
 {
     this->addItem(item);
+}
+
+// To do:
+// if removing node remove also every edge connected with the node
+// can be done only graph class is implemented
+void GraphRepresentation::removeGraphicsItem(QGraphicsItem *item)
+{
+    this->removeItem(item);
+    delete item;
+    item = nullptr;
 }

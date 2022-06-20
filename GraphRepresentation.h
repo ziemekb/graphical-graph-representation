@@ -35,9 +35,11 @@ private:
 
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);
+    void removeGraphicsItem(QGraphicsItem *item);
 
 signals:
     void clickedNode(const QPointF &pos, Node *node);
+    void clickedDestroy();
 };
 
 
