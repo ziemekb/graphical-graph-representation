@@ -5,6 +5,7 @@ BuildToolsManager::BuildToolsManager()
 {
     nodeCursor = new NodeCursor;
     destructionCursor = new DestructionCursor;
+    phantomEdge = new PhantomEdge;
 }
 
 void BuildToolsManager::update(buttonID checkedID, const QPointF &pos, Node *node)
@@ -32,3 +33,9 @@ DestructionCursor *BuildToolsManager::getDestructionCursor() const
 {
     return destructionCursor;
 }
+
+PhantomEdge *BuildToolsManager::getPhantomEdge() const
+{
+    return phantomEdge;
+}
+

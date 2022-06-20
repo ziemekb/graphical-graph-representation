@@ -19,6 +19,7 @@ SOURCES += \
         MainWindow.cpp \
         Node.cpp \
         NodeCursor.cpp \
+        PhantomEdge.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -36,7 +37,8 @@ HEADERS += \
     MainMenu.h \
     MainWindow.h \
     Node.h \
-    NodeCursor.h
+    NodeCursor.h \
+    PhantomEdge.h
 
 RESOURCES += \
     resources.qrc
