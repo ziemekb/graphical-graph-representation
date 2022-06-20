@@ -10,6 +10,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
 
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(this, &GraphRepresentation::clickedNode, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
+    connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
 
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());

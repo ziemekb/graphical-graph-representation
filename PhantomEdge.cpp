@@ -10,7 +10,10 @@ PhantomEdge::PhantomEdge()
 void PhantomEdge::receiveNode(const QPointF &pos, Node *node)
 {
     if(startingNode) {
-        // placeEdge(startingNode, node);
+        Edge *edge = new Edge(startingNode, node);
+        emit edgeToBePlaced(edge);
+        startingNode = nullptr;
+        this->hide();
         return;
     }
     startingNode = node;
