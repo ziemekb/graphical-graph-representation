@@ -1,5 +1,9 @@
 #include <QGraphicsProxyWidget>
+#include <QGraphicsSceneMouseEvent>
+#include <QPen>
 #include "DestructionCursor.h"
+#include "Node.h"
+#include "Edge.h"
 
 DestructionCursor::DestructionCursor()
 {
@@ -24,9 +28,37 @@ void DestructionCursor::updateCursor(const QPointF &pos)
     for(auto const &e : collidingItems) {
         if(typeid(*e) == typeid(QGraphicsProxyWidget)) {
             this->hide();
+            setHoveredOnItemsPen(Qt::black);
+            itemsToBeDestroyed.clear();
             return;
         }
     }
 
     this->show();
+    findItemsToBeDestroyed();
+}
+
+void DestructionCursor::findItemsToBeDestroyed()
+{
+    setHoveredOnItemsPen(Qt::black);
+
+    itemsToBeDestroyed = this->collidingItems();
+
+    setHoveredOnItemsPen(Qt::red);
+}
+
+void DestructionCursor::setHoveredOnItemsPen(QColor color)
+{
+    for(auto const &e : itemsToBeDestroyed) {
+
+        Node *node = dynamic_cast<Node*>(e);
+        if(node) {
+            node->setPen(QPen(color));
+        }
+
+        Edge *edge = dynamic_cast<Edge*>(e);
+        if(edge) {
+            edge->setPen(QPen(color));
+        }
+    }
 }

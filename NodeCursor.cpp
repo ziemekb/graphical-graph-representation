@@ -50,4 +50,6 @@ void NodeCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
         node->setPos(QPointF(node->center.x()-node->rect().width()/2, node->center.y()-node->rect().height()/2));
         emit nodeToBePlaced(node);
     }
+
+    QGraphicsEllipseItem::mousePressEvent(event);
 }

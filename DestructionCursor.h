@@ -12,6 +12,9 @@ public:
 private:
     int pixmapHeight;
     int pixmapWidth;
+    QList <QGraphicsItem*> itemsToBeDestroyed;
+    void findItemsToBeDestroyed();
+    void setHoveredOnItemsPen(QColor color);
 };
 
 #endif // DESTRUCTIONCURSOR_H
