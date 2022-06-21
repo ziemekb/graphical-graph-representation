@@ -114,9 +114,6 @@ void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
     this->addItem(item);
 }
 
-// To do:
-// if removing node remove also every edge connected with the node
-// can be done only graph class is implemented
 void GraphRepresentation::removeGraphicsItem(QGraphicsItem *item)
 {
     this->removeItem(item);

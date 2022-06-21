@@ -1,6 +1,4 @@
 #include "Graph.h"
-#include "GraphView.h"
-
 
 void Graph::addEdge(Edge *edge) {
 

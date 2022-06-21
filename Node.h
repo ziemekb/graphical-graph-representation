@@ -17,18 +17,16 @@ public:
     Node();
     Node(QPointF center);
 
-    QPointF center;
-
     void setCenter(const QPointF &center);
+    QPointF getCenter();
     void setColor(QColor color);
-
-    bool doesCollide();
 
     ~Node();
 
 private:
     static std::priority_queue<int, std::vector<int>, std::greater<int>> unusedNodeNumbers;
     int nodeNumber;
+    QPointF center;
 };
 
 #endif // NODE_H

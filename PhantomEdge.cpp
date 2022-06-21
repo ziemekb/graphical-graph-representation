@@ -17,7 +17,7 @@ void PhantomEdge::receiveNode(const QPointF &pos, Node *node)
         return;
     }
     startingNode = node;
-    this->setLine(QLineF(startingNode->center, pos));
+    this->setLine(QLineF(startingNode->getCenter(), pos));
     this->setPen(QPen(Qt::gray));
     this->show();
 }
@@ -25,7 +25,7 @@ void PhantomEdge::receiveNode(const QPointF &pos, Node *node)
 void PhantomEdge::update(const QPointF &pos)
 {
     if(startingNode) {
-        this->setLine(QLineF(startingNode->center, pos));
+        this->setLine(QLineF(startingNode->getCenter(), pos));
         this->show();
     }
 }

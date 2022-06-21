@@ -47,7 +47,7 @@ void NodeCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if(canPlace) {
         Node *node = new Node(QPointF(pos.x(), pos.y()));
-        node->setPos(QPointF(node->center.x()-node->rect().width()/2, node->center.y()-node->rect().height()/2));
+        node->setPos(QPointF(node->getCenter().x()-node->rect().width()/2, node->getCenter().y()-node->rect().height()/2));
         emit nodeToBePlaced(node);
     }
 

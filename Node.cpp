@@ -1,5 +1,5 @@
 #include "Node.h"
-#include "GraphView.h"
+#include "Graph.h"
 #include <QList>
 #include <QGraphicsItem>
 #include <QDebug>
@@ -37,27 +37,14 @@ Node::Node(QPointF center) : Node() {
     this->setCenter(center);
 }
 
-bool Node::doesCollide()
-{
-    QList<QGraphicsItem*> collidingItems = scene()->collidingItems(this);
-
-    for(auto const &e : collidingItems) {
-        if(typeid(*e) == typeid(Node)) {
-            qDebug() << "colliding node";
-            return true;
-        }
-        else if (typeid(*e) == typeid(QGraphicsSimpleTextItem)) {}
-        else if(typeid(*e) != typeid(QGraphicsEllipseItem)) {
-            qDebug() << "colliding object";
-            return true;
-        }
-    }
-    return false;
-}
-
 void Node::setCenter(const QPointF &center)
 {
     this->center = center;
+}
+
+QPointF Node::getCenter()
+{
+    return center;
 }
 
 void Node::setColor(QColor color)

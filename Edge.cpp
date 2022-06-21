@@ -9,7 +9,7 @@ Edge::Edge()
 
 Edge::Edge(Node *startingNode, Node *endingNode, int weight)
 {
-    this->setLine(QLineF(startingNode->center, endingNode->center));
+    this->setLine(QLineF(startingNode->getCenter(), endingNode->getCenter()));
     this->startingNode = startingNode;
     this->endingNode = endingNode;
     this->weight = weight;

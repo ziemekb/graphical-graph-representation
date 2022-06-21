@@ -3,8 +3,6 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
-//#include "MainMenu.h"
-//#include "GraphRepresentation.h"
 
 class MainMenu;
 class GraphRepresentation;

@@ -1,6 +1,5 @@
 #include <QGraphicsProxyWidget>
 #include <QVector>
-#include "GraphView.h"
 #include "MainMenu.h"
 
 MainMenu::MainMenu(QWidget *parent)
