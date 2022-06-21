@@ -25,7 +25,6 @@ Node::Node() {
 
     setData(nodeType, nodeNumber);
 
-
     QGraphicsSimpleTextItem *nodeTextNumber = new QGraphicsSimpleTextItem();
     nodeTextNumber->setText(QString::number(nodeNumber));
     nodeTextNumber->setPos(this->rect().width()/2-nodeTextNumber->boundingRect().width()/2,
@@ -34,29 +33,8 @@ Node::Node() {
     nodeTextNumber->setParentItem(this);
 }
 
-Node::Node(QPointF center) {
-    setPen(QPen(Qt::black));
-    setRect(0, 0, nodeWidth, nodeHeight);
+Node::Node(QPointF center) : Node() {
     this->setCenter(center);
-
-    Node::nodeCount++;
-
-    if(!unusedNodeNumbers.empty()) {
-        nodeNumber = unusedNodeNumbers.top();
-        unusedNodeNumbers.pop();
-    }
-    else {
-        nodeNumber = nodeCount;
-    }
-
-    setData(nodeType, nodeNumber);
-
-    QGraphicsSimpleTextItem *nodeTextNumber = new QGraphicsSimpleTextItem();
-    nodeTextNumber->setText(QString::number(nodeNumber));
-    nodeTextNumber->setPos(this->rect().width()/2-nodeTextNumber->boundingRect().width()/2,
-                           this->rect().height()/2-nodeTextNumber->boundingRect().height()/2);
-
-    nodeTextNumber->setParentItem(this);
 }
 
 bool Node::doesCollide()
