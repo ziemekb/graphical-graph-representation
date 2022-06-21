@@ -17,7 +17,6 @@ public:
     Node();
     Node(QPointF center);
 
-    int nodeNumber;
     QPointF center;
 
     void setCenter(const QPointF &center);
@@ -27,6 +26,9 @@ public:
 
     ~Node();
 
+private:
+    static std::priority_queue<int, std::vector<int>, std::greater<int>> unusedNodeNumbers;
+    int nodeNumber;
 };
 
 #endif // NODE_H

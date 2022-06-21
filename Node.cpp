@@ -6,17 +6,28 @@
 #include <QPen>
 
 int Node::nodeCount = 0;
+std::priority_queue<int, std::vector<int>, std::greater<int>> Node::unusedNodeNumbers;
+
 
 Node::Node() {
     setPen(QPen(Qt::black));
     setRect(0, 0, nodeWidth, nodeHeight);
-    nodeNumber = nodeCount;
 
-    setData(nodeType, nodeNumber);
     Node::nodeCount++;
 
+    if(!unusedNodeNumbers.empty()) {
+        nodeNumber = unusedNodeNumbers.top();
+        unusedNodeNumbers.pop();
+    }
+    else {
+        nodeNumber = nodeCount;
+    }
+
+    setData(nodeType, nodeNumber);
+
+
     QGraphicsSimpleTextItem *nodeTextNumber = new QGraphicsSimpleTextItem();
-    nodeTextNumber->setText(QString::number(nodeCount));
+    nodeTextNumber->setText(QString::number(nodeNumber));
     nodeTextNumber->setPos(this->rect().width()/2-nodeTextNumber->boundingRect().width()/2,
                            this->rect().height()/2-nodeTextNumber->boundingRect().height()/2);
 
@@ -27,13 +38,21 @@ Node::Node(QPointF center) {
     setPen(QPen(Qt::black));
     setRect(0, 0, nodeWidth, nodeHeight);
     this->setCenter(center);
-    nodeNumber = nodeCount;
 
-    setData(nodeType, nodeNumber);
     Node::nodeCount++;
 
+    if(!unusedNodeNumbers.empty()) {
+        nodeNumber = unusedNodeNumbers.top();
+        unusedNodeNumbers.pop();
+    }
+    else {
+        nodeNumber = nodeCount;
+    }
+
+    setData(nodeType, nodeNumber);
+
     QGraphicsSimpleTextItem *nodeTextNumber = new QGraphicsSimpleTextItem();
-    nodeTextNumber->setText(QString::number(nodeCount));
+    nodeTextNumber->setText(QString::number(nodeNumber));
     nodeTextNumber->setPos(this->rect().width()/2-nodeTextNumber->boundingRect().width()/2,
                            this->rect().height()/2-nodeTextNumber->boundingRect().height()/2);
 
@@ -71,6 +90,8 @@ void Node::setColor(QColor color)
 
 Node::~Node()
 {
+    unusedNodeNumbers.push(this->nodeNumber);
+
     nodeCount--;
 }
 
