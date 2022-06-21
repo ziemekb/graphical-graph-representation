@@ -45,7 +45,18 @@ void DestructionCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     for(auto const &e : itemsToBeDestroyed) {
 
-        if(typeid(*e) == typeid(Node) || typeid(*e) == typeid(Edge)) {
+        if(typeid(*e) == typeid(Node)) {
+            QList <QGraphicsItem*> collidingWithNode = e->collidingItems();
+
+            for (auto const &f : collidingWithNode) {
+                if(typeid(*f) == typeid(Edge)) {
+                    emit graphicsItemToRemove(f);
+                }
+            }
+
+            emit graphicsItemToRemove(e);
+        }
+        else if (typeid(*e) == typeid(Edge)) {
             emit graphicsItemToRemove(e);
         }
     }

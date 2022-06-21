@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsEllipseItem>
 #include <QPointF>
+#include <queue>
 
 class Node : public QObject, public QGraphicsEllipseItem {
     Q_OBJECT
@@ -25,6 +26,7 @@ public:
     bool doesCollide();
 
     ~Node();
+
 };
 
 #endif // NODE_H
