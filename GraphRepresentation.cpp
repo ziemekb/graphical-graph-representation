@@ -17,6 +17,8 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     this->addItem(buildToolsManager.getNodeCursor());
     this->addItem(buildToolsManager.getPhantomEdge());
 
+    graph = graphFactory.getGraph(type);
+
     generateToolBar(type);
 }
 
@@ -111,11 +113,23 @@ void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
 
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
 {
+    Edge *edge = dynamic_cast<Edge*>(item);
+
+    if(edge) {
+        graph->addEdge(edge);
+    }
+
     this->addItem(item);
 }
 
 void GraphRepresentation::removeGraphicsItem(QGraphicsItem *item)
 {
+    Edge *edge = dynamic_cast<Edge*>(item);
+
+    if(edge) {
+        graph->removeEdge(edge);
+    }
+
     this->removeItem(item);
     delete item;
     item = nullptr;

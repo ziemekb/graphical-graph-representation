@@ -41,8 +41,6 @@ void DestructionCursor::updateCursor(const QPointF &pos)
 
 void DestructionCursor::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << itemsToBeDestroyed;
-
     for(auto const &e : itemsToBeDestroyed) {
 
         if(typeid(*e) == typeid(Node)) {

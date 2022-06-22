@@ -10,6 +10,8 @@
 #include "MainWindow.h"
 #include "NodeCursor.h"
 #include "BuildToolsManager.h"
+#include "AbstractGraph.h"
+#include "GraphFactory.h"
 
 
 class GraphRepresentation : public QGraphicsScene {
@@ -30,8 +32,9 @@ private:
 
     BuildToolsManager buildToolsManager;
     void checkForPhantomEdgeNode(const QPointF &pos);
-    //AbstractGraph graph; in constructor - graph = graphFactory->createGraph(graphType);
-    //GraphFactory *graphFactory;
+
+    AbstractGraph *graph; //in constructor - graph = graphFactory->createGraph(graphType);
+    GraphFactory graphFactory;
 
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);
