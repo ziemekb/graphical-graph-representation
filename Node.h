@@ -20,6 +20,7 @@ public:
     void setCenter(const QPointF &center);
     QPointF getCenter();
     void setColor(QColor color);
+    QColor getColor();
 
     ~Node();
 
@@ -27,6 +28,7 @@ private:
     static std::priority_queue<int, std::vector<int>, std::greater<int>> unusedNodeNumbers;
     int nodeNumber;
     QPointF center;
+    QColor color;
 };
 
 #endif // NODE_H

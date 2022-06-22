@@ -20,3 +20,8 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
         }
     }
 }
+
+QList<Node *> AbstractGraph::getKeys()
+{
+    return adjList.keys();
+}

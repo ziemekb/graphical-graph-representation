@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QComboBox>
 #include <QPushButton>
+#include <QParallelAnimationGroup>
 #include "MainWindow.h"
 #include "NodeCursor.h"
 #include "BuildToolsManager.h"
@@ -35,6 +36,10 @@ private:
 
     AbstractGraph *graph; //in constructor - graph = graphFactory->createGraph(graphType);
     GraphFactory graphFactory;
+
+    QParallelAnimationGroup *initialAnimation;
+    void setInitialAnimation(Node *node);
+    void nodeColoringAnimation();
 
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);

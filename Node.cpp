@@ -51,6 +51,12 @@ void Node::setColor(QColor color)
 {
     //setPen(QPen(color)); //this sets the circumference color
     setBrush(color);       //this sets the inside color
+    this->color = color;
+}
+
+QColor Node::getColor()
+{
+    return color;
 }
 
 Node::~Node()

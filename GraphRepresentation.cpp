@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QButtonGroup>
 #include <QGraphicsSceneMouseEvent>
+#include <QPropertyAnimation>
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
 
@@ -18,6 +19,8 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     this->addItem(buildToolsManager.getPhantomEdge());
 
     graph = graphFactory.getGraph(type);
+
+    initialAnimation = new QParallelAnimationGroup;
 
     generateToolBar(type);
 }
@@ -107,6 +110,19 @@ void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
         if(node) {
             emit clickedNode(pos, node);
             break;
+        }
+    }
+}
+
+void GraphRepresentation::setInitialAnimation(Node *node)
+{
+    for(auto const &e :graph->getKeys()) {
+        if(e) {
+            QPropertyAnimation *nodeAnim = new QPropertyAnimation(node, "color");
+            nodeAnim->setStartValue(node->getColor());
+            nodeAnim->setDuration(1000);
+            nodeAnim->setEndValue(QColor(Qt::white));
+            initialAnimation->addAnimation(nodeAnim);
         }
     }
 }
