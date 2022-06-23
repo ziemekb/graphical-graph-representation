@@ -24,14 +24,14 @@ public:
     virtual void addEdge(Node* node1, Node* node2) = 0;
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
-    void runAlgorithm(algorithmType aType);
     void DFS(Node* firstNode, Node* searchedNode);
     QList<Node*> getKeys();
 
 signals:
     void nodesToColorSignal(QQueue<Node*> nodesToColor);
 public slots:
-    void receiveNode(const QPointF &pos, Node *node);
+    void receiveNode(Node *node);
+    void getAlgorithmType(algorithmType aType);
 
 protected:
     QHash<Node*, QHash<Node*, int>> adjList;
@@ -39,6 +39,7 @@ protected:
     QQueue<Node*> nodesToColor;
     Node *algorithmStartingNode;
     Node *algorithmEndingNode;
+    algorithmType aType;
 };
 
 inline bool operator==(const Node &node1, const Node &node2)

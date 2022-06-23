@@ -32,6 +32,7 @@ private:
     void generateToolBar(const graphType type);
 
     QComboBox *algorithmComboBox;
+    //const QStringList algorithmTypes = {"DFS", "BFS", "Dijkstra"};
     QPushButton *startAlgorithmButton;
 
     BuildToolsManager buildToolsManager;
@@ -53,7 +54,9 @@ public slots:
 
 signals:
     void clickedNodeWithPos(const QPointF &pos, Node *node);
+    void clickedNode(Node *node);
     void clickedDestroy();
+    void algorithmTypeSignal(algorithmType aType);
 };
 
 

@@ -6,17 +6,6 @@ AbstractGraph::AbstractGraph()
     algorithmEndingNode = nullptr;
 }
 
-void AbstractGraph::runAlgorithm(algorithmType aType)
-{
-    /*
-    switch(aType) {
-        case dfs:
-            this->DFS();
-        break;
-    }
-    */
-}
-
 void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
 {
     visited[startingNode] = true;
@@ -26,6 +15,7 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     if(startingNode == soughtNode) {
         emit nodesToColorSignal(nodesToColor);
         nodesToColor.clear();
+        qDebug() << "DFS found the sought node";
         return;
     }
 
@@ -43,7 +33,7 @@ QList<Node*> AbstractGraph::getKeys()
     return adjList.keys();
 }
 
-void AbstractGraph::receiveNode(const QPointF &pos, Node *node)
+void AbstractGraph::receiveNode(Node *node)
 {
     if(!algorithmStartingNode) {
         algorithmStartingNode = node;
@@ -52,9 +42,26 @@ void AbstractGraph::receiveNode(const QPointF &pos, Node *node)
 
     algorithmEndingNode = node;
 
-    qDebug() << "run DFS";
-    this->DFS(algorithmStartingNode, algorithmEndingNode);
+    switch(aType) {
+    case dfs:
+        this->DFS(algorithmStartingNode, algorithmEndingNode);
+        break;
+    case bfs:
+        //this->BFS(algorithmStartingNode, algorithmEndingNode);
+        break;
+    case dijkstra:
+        //this->dijkstra(algorithmStartingNode, algorithmEndingNode);
+        break;
+    default:
+        qDebug() << "unknown algorithm type";
+        break;
+    }
 
     algorithmStartingNode = nullptr;
     algorithmEndingNode = nullptr;
+}
+
+void AbstractGraph::getAlgorithmType(algorithmType aType)
+{
+    this->aType = aType;
 }

@@ -12,16 +12,6 @@ bool GraphRepresentation::animationState = false;
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
-    connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
-    connect(this, &GraphRepresentation::clickedNodeWithPos, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
-    connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
-    connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
-    /*
-    connect(startAlgorithmButton, &QPushButton::clicked, this, [this] {
-        emit algorithmStartSignal(static_cast<algorithmType>(algorithmComboBox->currentIndex()));
-    });
-    */
-
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
     this->addItem(buildToolsManager.getPhantomEdge());
@@ -32,7 +22,16 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
 
     generateToolBar(type);
 
+    connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
+    connect(this, &GraphRepresentation::clickedNodeWithPos, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
+    connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
+    connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
+    connect(this, &GraphRepresentation::clickedNode, graph, &AbstractGraph::receiveNode);
     connect(startAlgorithmButton, &QPushButton::clicked, this, &GraphRepresentation::drawAlgorithmAnimationPanel);
+    connect(startAlgorithmButton, &QPushButton::clicked, this, [this] {
+        emit algorithmTypeSignal(static_cast<algorithmType>(algorithmComboBox->currentData().toInt()));
+    });
+    connect(this, &GraphRepresentation::algorithmTypeSignal, graph, &AbstractGraph::getAlgorithmType);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -118,7 +117,7 @@ void GraphRepresentation::generateToolBar(const graphType type)
 
 void GraphRepresentation::checkForNode(const QPointF &pos)
 {
-    if(graphBuildButtonGroup->checkedId() != edgeButtonID || animationState) {
+    if(graphBuildButtonGroup->checkedId() != edgeButtonID && !animationState) {
         return;
     }
 
@@ -127,6 +126,10 @@ void GraphRepresentation::checkForNode(const QPointF &pos)
     for(auto const &e : itemsAt) {
         Node *node = dynamic_cast<Node*>(e);
         if(node) {
+            if(animationState) {
+                emit clickedNode(node);
+                break;
+            }
             emit clickedNodeWithPos(pos, node);
             break;
         }
