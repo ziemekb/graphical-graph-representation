@@ -11,12 +11,19 @@ enum dataType {
     edgeType
 };
 
+enum algorithmType {
+    dfs,
+    bfs,
+    dijkstra
+};
+
 class AbstractGraph : public QObject {
 Q_OBJECT
 public:
     virtual void addEdge(Node* node1, Node* node2) = 0;
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
+    void runAlgorithm(algorithmType aType);
     void DFS(Node* firstNode, Node* searchedNode);
     QList<Node*> getKeys();
 

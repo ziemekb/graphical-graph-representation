@@ -3,6 +3,7 @@
 #include <QButtonGroup>
 #include <QGraphicsSceneMouseEvent>
 #include <QPropertyAnimation>
+#include <QGraphicsSimpleTextItem>
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
 
@@ -13,7 +14,11 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     connect(this, &GraphRepresentation::clickedNode, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
     connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
-
+    /*
+    connect(startAlgorithmButton, &QPushButton::clicked, this, [this] {
+        emit algorithmStartSignal(static_cast<algorithmType>(algorithmComboBox->currentIndex()));
+    });
+    */
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
     this->addItem(buildToolsManager.getPhantomEdge());
@@ -23,6 +28,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     initialAnimation = new QParallelAnimationGroup;
 
     generateToolBar(type);
+    connect(startAlgorithmButton, &QPushButton::clicked, this, &GraphRepresentation::drawAlgorithmShowPanel);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -81,9 +87,9 @@ void GraphRepresentation::generateToolBar(const graphType type)
     algorithmComboBox = new QComboBox; // in future this needs to be seperate function with items added depending on the graphType
     //algorithmComboBox->setStyle(...); // algorithmComboBox needs to be changed so that the pop up list always rolls down
 
-    algorithmComboBox->addItem("DFS");
-    algorithmComboBox->addItem("BFS");
-    algorithmComboBox->addItem("Dijkstra's");
+    algorithmComboBox->addItem("DFS", dfs);
+    algorithmComboBox->addItem("BFS", bfs);
+    algorithmComboBox->addItem("Dijkstra's", dijkstra);
 
     graphToolBar->addWidget(algorithmComboBox);
 
@@ -149,4 +155,11 @@ void GraphRepresentation::removeGraphicsItem(QGraphicsItem *item)
     this->removeItem(item);
     delete item;
     item = nullptr;
+}
+
+void GraphRepresentation::drawAlgorithmShowPanel()
+{
+    graphToolBar->hide();
+
+    userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be starting point for the algorithm");
 }

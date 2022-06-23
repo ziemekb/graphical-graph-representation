@@ -1,5 +1,16 @@
 #include "AbstractGraph.h"
 
+void AbstractGraph::runAlgorithm(algorithmType aType)
+{
+    /*
+    switch(aType) {
+        case dfs:
+            this->DFS();
+        break;
+    }
+    */
+}
+
 void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
 {
     visited[startingNode] = true;

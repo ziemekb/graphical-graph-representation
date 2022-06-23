@@ -41,9 +41,12 @@ private:
     void setInitialAnimation(Node *node);
     void nodeColoringAnimation();
 
+    QGraphicsSimpleTextItem *userInstructions;
+
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);
     void removeGraphicsItem(QGraphicsItem *item);
+    void drawAlgorithmShowPanel();
 
 signals:
     void clickedNode(const QPointF &pos, Node *node);
