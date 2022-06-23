@@ -3,6 +3,7 @@
 #include <QButtonGroup>
 #include <QGraphicsSceneMouseEvent>
 #include <QPropertyAnimation>
+#include <QSequentialAnimationGroup>
 #include <QGraphicsSimpleTextItem>
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
@@ -32,6 +33,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
         emit algorithmTypeSignal(static_cast<algorithmType>(algorithmComboBox->currentData().toInt()));
     });
     connect(this, &GraphRepresentation::algorithmTypeSignal, graph, &AbstractGraph::getAlgorithmType);
+    connect(graph, &AbstractGraph::nodesToColorSignal, this, &GraphRepresentation::showNodeColoringAnimation);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -181,4 +183,21 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
 
     userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be starting point for the algorithm");
     this->addItem(userInstructions);
+}
+
+void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
+{
+    nodeColoringAnimation = new QSequentialAnimationGroup;
+
+    for(auto const &e : nodesToColor) {
+        Node *node = static_cast<Node*>(e);
+        QPropertyAnimation *nodeAnim = new QPropertyAnimation(node, "color");
+        nodeAnim->setStartValue(QBrush(Qt::white));
+        nodeAnim->setEndValue(QBrush(Qt::gray));
+        nodeAnim->setDuration(500);
+        nodeColoringAnimation->addAnimation(nodeAnim);
+    }
+    nodeColoringAnimation->addPause(1000);
+
+    nodeColoringAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }

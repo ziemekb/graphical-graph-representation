@@ -43,7 +43,8 @@ private:
 
     QParallelAnimationGroup *initialAnimation;
     void setInitialAnimation(Node *node);
-    void nodeColoringAnimation();
+
+    QSequentialAnimationGroup *nodeColoringAnimation;
 
     QGraphicsSimpleTextItem *userInstructions;
 
@@ -51,6 +52,7 @@ public slots:
     void placeGraphicsItem(QGraphicsItem *item);
     void removeGraphicsItem(QGraphicsItem *item);
     void drawAlgorithmAnimationPanel();
+    void showNodeColoringAnimation(QQueue<Node*> nodesToColor);
 
 signals:
     void clickedNodeWithPos(const QPointF &pos, Node *node);
