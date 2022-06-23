@@ -20,6 +20,7 @@ enum algorithmType {
 class AbstractGraph : public QObject {
 Q_OBJECT
 public:
+    AbstractGraph();
     virtual void addEdge(Node* node1, Node* node2) = 0;
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
@@ -29,11 +30,15 @@ public:
 
 signals:
     void nodesToColorSignal(QQueue<Node*> nodesToColor);
+public slots:
+    void receiveNode(const QPointF &pos, Node *node);
 
 protected:
     QHash<Node*, QHash<Node*, int>> adjList;
     QMap <Node*, bool> visited;
     QQueue<Node*> nodesToColor;
+    Node *algorithmStartingNode;
+    Node *algorithmEndingNode;
 };
 
 inline bool operator==(const Node &node1, const Node &node2)

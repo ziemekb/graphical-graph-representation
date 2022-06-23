@@ -7,11 +7,13 @@
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
 
+bool GraphRepresentation::animationState = false;
+
 GraphRepresentation::GraphRepresentation(const graphType type) {
     this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
 
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
-    connect(this, &GraphRepresentation::clickedNode, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
+    connect(this, &GraphRepresentation::clickedNodeWithPos, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
     connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
     /*
@@ -19,6 +21,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
         emit algorithmStartSignal(static_cast<algorithmType>(algorithmComboBox->currentIndex()));
     });
     */
+
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
     this->addItem(buildToolsManager.getPhantomEdge());
@@ -28,7 +31,8 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     initialAnimation = new QParallelAnimationGroup;
 
     generateToolBar(type);
-    connect(startAlgorithmButton, &QPushButton::clicked, this, &GraphRepresentation::drawAlgorithmShowPanel);
+
+    connect(startAlgorithmButton, &QPushButton::clicked, this, &GraphRepresentation::drawAlgorithmAnimationPanel);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -40,13 +44,22 @@ void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphRepresentation::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    checkForPhantomEdgeNode(event->scenePos());
+    checkForNode(event->scenePos());
 
     if(graphBuildButtonGroup->checkedId() == destroyButtonId) {
         emit clickedDestroy();
     }
 
     QGraphicsScene::mousePressEvent(event);
+}
+
+void GraphRepresentation::resetRadioButtons()
+{
+    graphBuildButtonGroup->setExclusive(false);
+
+    graphBuildButtonGroup->checkedButton()->setChecked(false);
+
+    graphBuildButtonGroup->setExclusive(true);
 }
 
 void GraphRepresentation::generateToolBar(const graphType type)
@@ -103,9 +116,9 @@ void GraphRepresentation::generateToolBar(const graphType type)
     this->addWidget(graphToolBar);
 }
 
-void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
+void GraphRepresentation::checkForNode(const QPointF &pos)
 {
-    if(graphBuildButtonGroup->checkedId() != edgeButtonID) {
+    if(graphBuildButtonGroup->checkedId() != edgeButtonID || animationState) {
         return;
     }
 
@@ -114,7 +127,7 @@ void GraphRepresentation::checkForPhantomEdgeNode(const QPointF &pos)
     for(auto const &e : itemsAt) {
         Node *node = dynamic_cast<Node*>(e);
         if(node) {
-            emit clickedNode(pos, node);
+            emit clickedNodeWithPos(pos, node);
             break;
         }
     }
@@ -157,9 +170,12 @@ void GraphRepresentation::removeGraphicsItem(QGraphicsItem *item)
     item = nullptr;
 }
 
-void GraphRepresentation::drawAlgorithmShowPanel()
+void GraphRepresentation::drawAlgorithmAnimationPanel()
 {
+    animationState = true;
     graphToolBar->hide();
+    this->resetRadioButtons();
 
     userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be starting point for the algorithm");
+    this->addItem(userInstructions);
 }

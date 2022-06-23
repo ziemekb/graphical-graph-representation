@@ -16,9 +16,11 @@ public:
 
     Node();
     Node(QPointF center);
+    void mousePressEvene(QGraphicsSceneMouseEvent *event);
 
     void setCenter(const QPointF &center);
     QPointF getCenter();
+
     void setColor(QColor color);
     QColor getColor();
 

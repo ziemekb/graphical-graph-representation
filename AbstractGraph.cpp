@@ -1,5 +1,11 @@
 #include "AbstractGraph.h"
 
+AbstractGraph::AbstractGraph()
+{
+    algorithmStartingNode = nullptr;
+    algorithmEndingNode = nullptr;
+}
+
 void AbstractGraph::runAlgorithm(algorithmType aType)
 {
     /*
@@ -32,7 +38,23 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     }
 }
 
-QList<Node *> AbstractGraph::getKeys()
+QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
+}
+
+void AbstractGraph::receiveNode(const QPointF &pos, Node *node)
+{
+    if(!algorithmStartingNode) {
+        algorithmStartingNode = node;
+        return;
+    }
+
+    algorithmEndingNode = node;
+
+    qDebug() << "run DFS";
+    this->DFS(algorithmStartingNode, algorithmEndingNode);
+
+    algorithmStartingNode = nullptr;
+    algorithmEndingNode = nullptr;
 }
