@@ -4,7 +4,7 @@
 
 MainMenu::MainMenu(QWidget *parent)
 {
-    this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
+    this->setSceneRect(0, 0, Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
     createStartingMenu();
     createGraphCreationMenu();
@@ -52,10 +52,10 @@ void MainMenu::createStartingMenu()
     proxyWidgetVector.push_back(this->addWidget(startButton));
     proxyWidgetVector.push_back(this->addWidget(quitButton));
 
-    startButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
-    quitButton->move(Constansts::SCREEN_WIDTH/2 - quitButton->rect().width()/2,
-                     Constansts::SCREEN_HEIGHT/2 - quitButton->rect().height()/2 + 25);
+    startButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 25);
+    quitButton->move(Constants::SCREEN_WIDTH/2 - quitButton->rect().width()/2,
+                     Constants::SCREEN_HEIGHT/2 - quitButton->rect().height()/2 + 25);
 }
 
 void MainMenu::createGraphCreationMenu()
@@ -84,23 +84,23 @@ void MainMenu::createGraphCreationMenu()
     proxyWidgetVector.push_back(this->addWidget(createGraphButton));
     proxyWidgetVector.push_back(this->addWidget(returnButton));
 
-    weightedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
+    weightedButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
 
-    unweightedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
+    unweightedButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 100);
 
-    directedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
+    directedButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
 
-    undirectedButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
+    undirectedButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 - 50);
 
-    returnButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
+    returnButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 - 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
 
-    createGraphButton->move(Constansts::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
-                      Constansts::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
+    createGraphButton->move(Constants::SCREEN_WIDTH/2 - startButton->rect().width()/2 + 100,
+                      Constants::SCREEN_HEIGHT/2 - startButton->rect().height()/2 + 100);
 }
 
 

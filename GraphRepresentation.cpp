@@ -11,7 +11,7 @@
 bool GraphRepresentation::animationState = false;
 
 GraphRepresentation::GraphRepresentation(const graphType type) {
-    this->setSceneRect(0, 0, Constansts::SCREEN_WIDTH, Constansts::SCREEN_HEIGHT);
+    this->setSceneRect(0, 0, Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
     this->addItem(buildToolsManager.getDestructionCursor());
     this->addItem(buildToolsManager.getNodeCursor());
@@ -22,6 +22,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     initialAnimation = new QParallelAnimationGroup;
 
     generateToolBar(type);
+    setAlgorithmAnimationPanel();
 
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(this, &GraphRepresentation::clickedNodeWithPos, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
@@ -34,6 +35,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     });
     connect(this, &GraphRepresentation::algorithmTypeSignal, graph, &AbstractGraph::getAlgorithmType);
     connect(graph, &AbstractGraph::nodesToColorSignal, this, &GraphRepresentation::showNodeColoringAnimation);
+    connect(quitAnimationButton, &QPushButton::clicked, this, &GraphRepresentation::returnToBuildMode);
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -138,17 +140,39 @@ void GraphRepresentation::checkForNode(const QPointF &pos)
     }
 }
 
-void GraphRepresentation::setInitialAnimation(Node *node)
+void GraphRepresentation::setInitialAnimation()
 {
     for(auto const &e :graph->getKeys()) {
         if(e) {
-            QPropertyAnimation *nodeAnim = new QPropertyAnimation(node, "color");
-            nodeAnim->setStartValue(node->getColor());
-            nodeAnim->setDuration(1000);
+            QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
+            nodeAnim->setStartValue(e->getColor());
+            nodeAnim->setDuration(500);
             nodeAnim->setEndValue(QColor(Qt::white));
             initialAnimation->addAnimation(nodeAnim);
         }
     }
+}
+
+void GraphRepresentation::setAlgorithmAnimationPanel()
+{
+    userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be the starting point for the algorithm");
+    this->addItem(userInstructions);
+    userInstructions->hide();
+
+    quitAnimationButton = new QPushButton("Quit Animation");
+    this->addWidget(quitAnimationButton);
+    quitAnimationButton->move(Constants::SCREEN_WIDTH - quitAnimationButton->rect().width(),
+                              Constants::SCREEN_HEIGHT - quitAnimationButton->rect().height());
+    quitAnimationButton->hide();
+}
+
+void GraphRepresentation::returnToBuildMode()
+{
+    userInstructions->hide();
+    quitAnimationButton->hide();
+    graphToolBar->show();
+    setInitialAnimation();
+    initialAnimation->start();
 }
 
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
@@ -181,8 +205,9 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
     graphToolBar->hide();
     this->resetRadioButtons();
 
-    userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be starting point for the algorithm");
-    this->addItem(userInstructions);
+    userInstructions->show();
+
+    quitAnimationButton->show();
 }
 
 void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)

@@ -42,11 +42,14 @@ private:
     GraphFactory graphFactory;
 
     QParallelAnimationGroup *initialAnimation;
-    void setInitialAnimation(Node *node);
+    void setInitialAnimation();
 
     QSequentialAnimationGroup *nodeColoringAnimation;
 
+    void setAlgorithmAnimationPanel();
     QGraphicsSimpleTextItem *userInstructions;
+    QPushButton *quitAnimationButton;
+    void returnToBuildMode();
 
 public slots:
     void placeGraphicsItem(QGraphicsItem *item);

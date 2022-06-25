@@ -14,7 +14,7 @@ enum graphType {
     weightedDirected
 };
 
-namespace Constansts {
+namespace Constants {
         inline constexpr int SCREEN_WIDTH = 800;
         inline constexpr int SCREEN_HEIGHT = 600;
 };
