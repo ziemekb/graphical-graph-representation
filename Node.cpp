@@ -1,5 +1,5 @@
 #include "Node.h"
-#include "Graph.h"
+#include "AbstractGraph.h"
 #include <QList>
 #include <QGraphicsItem>
 #include <QDebug>

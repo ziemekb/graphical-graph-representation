@@ -15,7 +15,6 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     if(startingNode == soughtNode) {
         emit nodesToColorSignal(nodesToColor);
         nodesToColor.clear();
-        qDebug() << "DFS found the sought node";
         return;
     }
 
