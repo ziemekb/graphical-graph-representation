@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+#include <QLabel>
 #include <QGraphicsSimpleTextItem>
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
@@ -132,6 +133,7 @@ void GraphRepresentation::checkForNode(const QPointF &pos)
         if(node) {
             if(animationState) {
                 emit clickedNode(node);
+                advanceUserInstructions();
                 break;
             }
             emit clickedNodeWithPos(pos, node);
@@ -155,8 +157,28 @@ void GraphRepresentation::setInitialAnimation()
 
 void GraphRepresentation::setAlgorithmAnimationPanel()
 {
-    userInstructions = new QGraphicsSimpleTextItem("Click on the node which will be the starting point for the algorithm");
-    this->addItem(userInstructions);
+    userInstructions = new QStackedWidget();
+
+    QLabel *stInstruction = new QLabel("Click on the node which will be the starting vertice for the algorithm");
+    //stInstruction->setAutoFillBackground(false);
+    stInstruction->setStyleSheet("background:white");
+
+    userInstructions->addWidget(stInstruction);
+
+    QLabel *ndInstruction = new QLabel("Click on the node which will be the ending vertice for the algorithm");
+    ndInstruction->setStyleSheet("background:white");
+
+    userInstructions->addWidget(ndInstruction);
+
+    QLabel *rdInstruction = new QLabel;
+    rdInstruction->setStyleSheet("background:white");
+
+    userInstructions->addWidget(rdInstruction);
+
+    this->addWidget(userInstructions);
+    userInstructions->move(Constants::SCREEN_WIDTH/2 - userInstructions->rect().width()/2,
+                           -userInstructions->rect().height()/4);
+
     userInstructions->hide();
 
     quitAnimationButton = new QPushButton("Quit Animation");
@@ -166,13 +188,28 @@ void GraphRepresentation::setAlgorithmAnimationPanel()
     quitAnimationButton->hide();
 }
 
+void GraphRepresentation::advanceUserInstructions()
+{
+    if(userInstructions->currentIndex() < userInstructions->count() - 1) {
+        userInstructions->setCurrentIndex(userInstructions->currentIndex() + 1);
+    }
+    else if (userInstructions->currentIndex() == userInstructions->count() - 1){
+        userInstructions->setCurrentIndex(userInstructions->currentIndex() + 1);
+        animationState = false;
+    }
+}
+
 void GraphRepresentation::returnToBuildMode()
 {
     userInstructions->hide();
     quitAnimationButton->hide();
     graphToolBar->show();
+
     setInitialAnimation();
     initialAnimation->start();
+
+    userInstructions->setCurrentIndex(0);
+    animationState = false;
 }
 
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)

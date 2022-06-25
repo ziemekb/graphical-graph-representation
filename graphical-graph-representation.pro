@@ -13,7 +13,6 @@ SOURCES += \
         BuildToolsManager.cpp \
         DestructionCursor.cpp \
         Edge.cpp \
-        Graph.cpp \
         GraphFactory.cpp \
         GraphRepresentation.cpp \
         MainMenu.cpp \
@@ -34,7 +33,6 @@ HEADERS += \
     BuildToolsManager.h \
     DestructionCursor.h \
     Edge.h \
-    Graph.h \
     GraphFactory.h \
     GraphRepresentation.h \
     MainMenu.h \

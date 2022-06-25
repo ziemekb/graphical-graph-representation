@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QParallelAnimationGroup>
+#include <QStackedWidget>
 #include "MainWindow.h"
 #include "NodeCursor.h"
 #include "BuildToolsManager.h"
@@ -38,7 +39,7 @@ private:
     BuildToolsManager buildToolsManager;
     void checkForNode(const QPointF &pos);
 
-    AbstractGraph *graph; //in constructor - graph = graphFactory->createGraph(graphType);
+    AbstractGraph *graph;
     GraphFactory graphFactory;
 
     QParallelAnimationGroup *initialAnimation;
@@ -47,7 +48,9 @@ private:
     QSequentialAnimationGroup *nodeColoringAnimation;
 
     void setAlgorithmAnimationPanel();
-    QGraphicsSimpleTextItem *userInstructions;
+    QStackedWidget *userInstructions;
+    void advanceUserInstructions();
+    //QGraphicsSimpleTextItem *userInstructions;
     QPushButton *quitAnimationButton;
     void returnToBuildMode();
 
