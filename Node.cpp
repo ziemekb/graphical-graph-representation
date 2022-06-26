@@ -56,7 +56,7 @@ void Node::setColor(QColor color)
 
 QColor Node::getColor()
 {
-    return this->brush().color();
+    return this->color;
 }
 
 Node::~Node()

@@ -14,16 +14,14 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
 
     if(startingNode == soughtNode) {
         emit nodesToColorSignal(nodesToColor);
-        nodesToColor.clear();
-        resetVisited();
-        return;
     }
+    else {
+        QHash<Node*, int>::const_iterator i;
 
-    QHash<Node*, int>::const_iterator i;
-
-    for(i  = adjList[startingNode].constBegin(); i != adjList[startingNode].constEnd(); ++i) {
-        if(!visited[i.key()]) {
-            this->DFS(i.key(), soughtNode);
+        for(i  = adjList[startingNode].constBegin(); i != adjList[startingNode].constEnd(); ++i) {
+            if(!visited[i.key()]) {
+                this->DFS(i.key(), soughtNode);
+            }
         }
     }
 }
@@ -35,6 +33,7 @@ QList<Node*> AbstractGraph::getKeys()
 
 void AbstractGraph::receiveNode(Node *node)
 {
+    qDebug() << "receive Node";
     if(!algorithmStartingNode) {
         algorithmStartingNode = node;
         return;
@@ -59,6 +58,8 @@ void AbstractGraph::receiveNode(Node *node)
 
     algorithmStartingNode = nullptr;
     algorithmEndingNode = nullptr;
+    resetVisited();
+    nodesToColor.clear();
 }
 
 void AbstractGraph::getAlgorithmType(algorithmType aType)

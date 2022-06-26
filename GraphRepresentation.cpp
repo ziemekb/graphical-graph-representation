@@ -252,11 +252,13 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
 
 void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
 {
+    //qDebug() << "before setInitialAnimation";
     setInitialAnimation(nodesToColor);
 
+    //qDebug() << "before showNodeColoringAnimation";
     for(auto const &e : nodesToColor) {
-        Node *node = static_cast<Node*>(e);
-        QPropertyAnimation *nodeAnim = new QPropertyAnimation(node, "color");
+        //Node *node = static_cast<Node*>(e);
+        QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
         nodeAnim->setStartValue(QColor(Qt::transparent));
         nodeAnim->setEndValue(QBrush(Qt::gray));
         nodeAnim->setDuration(500);
