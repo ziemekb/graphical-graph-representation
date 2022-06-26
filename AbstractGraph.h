@@ -40,6 +40,9 @@ protected:
     Node *algorithmStartingNode;
     Node *algorithmEndingNode;
     algorithmType aType;
+
+private:
+    void resetVisited();
 };
 
 inline bool operator==(const Node &node1, const Node &node2)

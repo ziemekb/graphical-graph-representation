@@ -15,6 +15,7 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     if(startingNode == soughtNode) {
         emit nodesToColorSignal(nodesToColor);
         nodesToColor.clear();
+        resetVisited();
         return;
     }
 
@@ -63,4 +64,11 @@ void AbstractGraph::receiveNode(Node *node)
 void AbstractGraph::getAlgorithmType(algorithmType aType)
 {
     this->aType = aType;
+}
+
+void AbstractGraph::resetVisited()
+{
+    for(auto const &e : getKeys()) {
+        visited[e] = false;
+    }
 }
