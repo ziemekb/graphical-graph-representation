@@ -43,7 +43,7 @@ private:
     GraphFactory graphFactory;
 
     QParallelAnimationGroup *initialAnimation;
-    void setInitialAnimation();
+    void setInitialAnimation(QQueue<Node*> nodesToColor);
 
     QSequentialAnimationGroup *nodeColoringAnimation;
 

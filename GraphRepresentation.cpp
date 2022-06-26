@@ -20,6 +20,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
 
     graph = graphFactory.getGraph(type);
 
+    nodeColoringAnimation = new QSequentialAnimationGroup;
     initialAnimation = new QParallelAnimationGroup;
 
     generateToolBar(type);
@@ -37,6 +38,8 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     connect(this, &GraphRepresentation::algorithmTypeSignal, graph, &AbstractGraph::getAlgorithmType);
     connect(graph, &AbstractGraph::nodesToColorSignal, this, &GraphRepresentation::showNodeColoringAnimation);
     connect(quitAnimationButton, &QPushButton::clicked, this, &GraphRepresentation::returnToBuildMode);
+    connect(initialAnimation, &QParallelAnimationGroup::finished, this, [this]{this->initialAnimation->clear();});
+    connect(nodeColoringAnimation, &QSequentialAnimationGroup::finished, this, [this]{this->nodeColoringAnimation->clear();});
 }
 
 void GraphRepresentation::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -145,16 +148,14 @@ void GraphRepresentation::checkForNode(const QPointF &pos)
     }
 }
 
-void GraphRepresentation::setInitialAnimation()
+void GraphRepresentation::setInitialAnimation(QQueue<Node*> nodesToColor)
 {
-    for(auto const &e :graph->getKeys()) {
-        if(e) {
-            QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
-            nodeAnim->setStartValue(e->getColor());
-            nodeAnim->setDuration(500);
-            nodeAnim->setEndValue(QColor(Qt::white));
-            initialAnimation->addAnimation(nodeAnim);
-        }
+    for(auto const &e : nodesToColor) {
+        QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
+        nodeAnim->setStartValue(QColor(Qt::gray));
+        nodeAnim->setDuration(500);
+        nodeAnim->setEndValue(QColor(Qt::transparent));
+        initialAnimation->addAnimation(nodeAnim);
     }
 }
 
@@ -208,7 +209,6 @@ void GraphRepresentation::returnToBuildMode()
     quitAnimationButton->hide();
     graphToolBar->show();
 
-    setInitialAnimation();
     initialAnimation->start();
 
     userInstructions->setCurrentIndex(0);
@@ -252,17 +252,17 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
 
 void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
 {
-    nodeColoringAnimation = new QSequentialAnimationGroup;
+    setInitialAnimation(nodesToColor);
 
     for(auto const &e : nodesToColor) {
         Node *node = static_cast<Node*>(e);
         QPropertyAnimation *nodeAnim = new QPropertyAnimation(node, "color");
-        nodeAnim->setStartValue(QBrush(Qt::white));
+        nodeAnim->setStartValue(QColor(Qt::transparent));
         nodeAnim->setEndValue(QBrush(Qt::gray));
         nodeAnim->setDuration(500);
         nodeColoringAnimation->addAnimation(nodeAnim);
     }
     nodeColoringAnimation->addPause(1000);
 
-    nodeColoringAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    nodeColoringAnimation->start();
 }

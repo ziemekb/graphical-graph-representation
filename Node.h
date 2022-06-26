@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QGraphicsEllipseItem>
 #include <QPointF>
+#include <QBrush>
 #include <queue>
 
 class Node : public QObject, public QGraphicsEllipseItem {
     Q_OBJECT
-    Q_PROPERTY(QColor color WRITE setColor)
+    Q_PROPERTY(QColor color READ getColor WRITE setColor)
 public:
     static int nodeCount;
     static constexpr int nodeWidth = 75;
