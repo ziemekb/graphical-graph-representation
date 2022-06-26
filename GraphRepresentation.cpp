@@ -59,11 +59,14 @@ void GraphRepresentation::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphRepresentation::resetRadioButtons()
 {
-    graphBuildButtonGroup->setExclusive(false);
+    if(graphBuildButtonGroup->checkedButton()) {
 
-    graphBuildButtonGroup->checkedButton()->setChecked(false);
+        graphBuildButtonGroup->setExclusive(false);
 
-    graphBuildButtonGroup->setExclusive(true);
+        graphBuildButtonGroup->checkedButton()->setChecked(false);
+
+        graphBuildButtonGroup->setExclusive(true);
+    }
 }
 
 void GraphRepresentation::generateToolBar(const graphType type)
