@@ -22,3 +22,12 @@ Edge::~Edge()
 }
 
 
+int Edge::getWeight()
+{
+    return this->weight;
+}
+
+void Edge::setWeight(int weight)
+{
+    this->weight = weight;
+}

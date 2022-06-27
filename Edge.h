@@ -7,13 +7,17 @@
 class Edge : public QGraphicsLineItem {
 
 public:
+    Edge();
+    Edge(Node *startingNode, Node *endingNode, int weight = 1);
+    ~Edge();
+
     Node *startingNode;
     Node *endingNode;
-    int weight;
+    int getWeight();
+    void setWeight(int weight);
 
-    Edge();
-    Edge(Node *startingNode, Node *endingNode, int weight = 0);
-    ~Edge();
+private:
+    int weight;
 };
 
 #endif // EDGE_H

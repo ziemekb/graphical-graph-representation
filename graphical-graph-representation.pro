@@ -21,6 +21,7 @@ SOURCES += \
         NodeCursor.cpp \
         PhantomEdge.cpp \
         UnweightedUndirectedGraph.cpp \
+        WeightedUndirectedGraph.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -40,7 +41,8 @@ HEADERS += \
     Node.h \
     NodeCursor.h \
     PhantomEdge.h \
-    UnweightedUndirectedGraph.h
+    UnweightedUndirectedGraph.h \
+    WeightedUndirectedGraph.h
 
 RESOURCES += \
     resources.qrc

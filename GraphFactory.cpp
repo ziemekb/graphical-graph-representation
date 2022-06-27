@@ -1,5 +1,6 @@
 #include "GraphFactory.h"
 #include "UnweightedUndirectedGraph.h"
+#include "WeightedUndirectedGraph.h"
 
 AbstractGraph *GraphFactory::getGraph(const graphType type)
 {
@@ -10,7 +11,7 @@ AbstractGraph *GraphFactory::getGraph(const graphType type)
         //return new UnweightedDirectedGraph;
     }
     else if(type == weightedUndirected) {
-        //return new WeightedUndirectedGraph;
+        return new WeightedUndirectedGraph;
     }
     else if(type == weightedDirected) {
         //return new WeightedDirectedGraph;
