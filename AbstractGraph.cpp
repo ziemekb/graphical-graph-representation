@@ -33,7 +33,6 @@ QList<Node*> AbstractGraph::getKeys()
 
 void AbstractGraph::receiveNode(Node *node)
 {
-    qDebug() << "receive Node";
     if(!algorithmStartingNode) {
         algorithmStartingNode = node;
         return;

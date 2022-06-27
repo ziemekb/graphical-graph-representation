@@ -164,7 +164,6 @@ void GraphRepresentation::setAlgorithmAnimationPanel()
     userInstructions = new QStackedWidget();
 
     QLabel *stInstruction = new QLabel("Click on the node which will be the starting vertice for the algorithm");
-    //stInstruction->setAutoFillBackground(false);
     stInstruction->setStyleSheet("background:white");
 
     userInstructions->addWidget(stInstruction);
@@ -252,12 +251,9 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
 
 void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
 {
-    //qDebug() << "before setInitialAnimation";
     setInitialAnimation(nodesToColor);
 
-    //qDebug() << "before showNodeColoringAnimation";
     for(auto const &e : nodesToColor) {
-        //Node *node = static_cast<Node*>(e);
         QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
         nodeAnim->setStartValue(QColor(Qt::transparent));
         nodeAnim->setEndValue(QBrush(Qt::gray));
