@@ -2,10 +2,11 @@
 #define EDGE_H
 
 #include <QGraphicsLineItem>
+#include <QGraphicsTextItem>
 #include "Node.h"
 
-class Edge : public QGraphicsLineItem {
-
+class Edge : public QObject, public QGraphicsLineItem {
+Q_OBJECT
 public:
     Edge();
     Edge(Node *startingNode, Node *endingNode, int weight = 1);
@@ -18,6 +19,8 @@ public:
 
 private:
     int weight;
+    QGraphicsTextItem *weightText;
+    void setWeightFromText();
 };
 
 #endif // EDGE_H
