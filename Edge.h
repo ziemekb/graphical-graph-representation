@@ -4,12 +4,14 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsTextItem>
 #include "Node.h"
+#include "MainWindow.h"
 
 class Edge : public QObject, public QGraphicsLineItem {
 Q_OBJECT
 public:
+    static Edge *createEdge(Node *startingNode, Node *endingNode, const graphType type);
     Edge();
-    Edge(Node *startingNode, Node *endingNode, int weight = 1);
+    Edge(Node *startingNode, Node *endingNode, bool weighted = false, bool directed = false);
     ~Edge();
 
     Node *startingNode;

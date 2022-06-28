@@ -2,6 +2,30 @@
 #include <QTextDocument>
 #include <QtMath>
 
+Edge *Edge::createEdge(Node *startingNode, Node *endingNode, const graphType type)
+{
+    switch(type) {
+        case unweightedUndirected:
+            return new Edge(startingNode, endingNode, false, false);
+        break;
+
+        case unweightedDirected:
+            return new Edge(startingNode, endingNode, false, true);
+        break;
+
+        case weightedUndirected:
+            return new Edge(startingNode, endingNode, true, false);
+        break;
+
+        case weightedDirected:
+            return new Edge(startingNode, endingNode, true, true);
+        break;
+
+        default:
+            return new Edge();
+    }
+}
+
 Edge::Edge()
 {
     startingNode = nullptr;
@@ -9,21 +33,33 @@ Edge::Edge()
     weight = 0;
 }
 
-Edge::Edge(Node *startingNode, Node *endingNode, int weight)
+Edge::Edge(Node *startingNode, Node *endingNode, bool weighted, bool directed)
 {
     this->setLine(QLineF(startingNode->getCenter(), endingNode->getCenter()));
     this->startingNode = startingNode;
     this->endingNode = endingNode;
-    this->weight = weight;
+    this->weight = 1;
 
 
-    weightText = new QGraphicsTextItem(this);
-    weightText->setPlainText(QString::number(weight));
-    weightText->setTextInteractionFlags(Qt::TextEditorInteraction);
-    weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2,
-                       qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - 25);
+    if(weighted) {
+        weightText = new QGraphicsTextItem(this);
+        weightText->setPlainText(QString::number(weight));
+        weightText->setTextInteractionFlags(Qt::TextEditorInteraction);
+        weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2,
+                           qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - 25);
+        connect(weightText->document(), &QTextDocument::contentsChanged, this, &Edge::setWeightFromText);
+    }
+    else {
+        weightText = nullptr;
+    }
+    /*
+    if(directed) {
+        arrow = new ...
+    }
+    else {
 
-    connect(weightText->document(), &QTextDocument::contentsChanged, this, &Edge::setWeightFromText);
+    }
+    */
 }
 
 Edge::~Edge()

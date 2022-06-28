@@ -20,6 +20,7 @@ class GraphRepresentation : public QGraphicsScene {
 Q_OBJECT
 public:
     static bool animationState;
+    //static graphType type;
 
     GraphRepresentation(const graphType type);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
