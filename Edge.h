@@ -9,9 +9,8 @@
 class Edge : public QObject, public QGraphicsLineItem {
 Q_OBJECT
 public:
-    static Edge *createEdge(Node *startingNode, Node *endingNode, const graphType type);
     Edge();
-    Edge(Node *startingNode, Node *endingNode, bool weighted = false, bool directed = false);
+    Edge(Node *startingNode, Node *endingNode);
     ~Edge();
 
     Node *startingNode;
@@ -23,6 +22,10 @@ private:
     int weight;
     QGraphicsTextItem *weightText;
     void setWeightFromText();
+    static graphType type;
+
+public slots:
+    void receiveGraphType(graphType type);
 };
 
 #endif // EDGE_H

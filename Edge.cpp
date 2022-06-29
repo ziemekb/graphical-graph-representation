@@ -2,29 +2,7 @@
 #include <QTextDocument>
 #include <QtMath>
 
-Edge *Edge::createEdge(Node *startingNode, Node *endingNode, const graphType type)
-{
-    switch(type) {
-        case unweightedUndirected:
-            return new Edge(startingNode, endingNode, false, false);
-        break;
-
-        case unweightedDirected:
-            return new Edge(startingNode, endingNode, false, true);
-        break;
-
-        case weightedUndirected:
-            return new Edge(startingNode, endingNode, true, false);
-        break;
-
-        case weightedDirected:
-            return new Edge(startingNode, endingNode, true, true);
-        break;
-
-        default:
-            return new Edge();
-    }
-}
+graphType Edge::type;
 
 Edge::Edge()
 {
@@ -33,15 +11,16 @@ Edge::Edge()
     weight = 0;
 }
 
-Edge::Edge(Node *startingNode, Node *endingNode, bool weighted, bool directed)
+Edge::Edge(Node *startingNode, Node *endingNode)
 {
     this->setLine(QLineF(startingNode->getCenter(), endingNode->getCenter()));
     this->startingNode = startingNode;
     this->endingNode = endingNode;
     this->weight = 1;
 
+    qDebug() << type;
 
-    if(weighted) {
+    if(type == weightedUndirected || type == weightedDirected) {
         weightText = new QGraphicsTextItem(this);
         weightText->setPlainText(QString::number(weight));
         weightText->setTextInteractionFlags(Qt::TextEditorInteraction);
@@ -53,7 +32,7 @@ Edge::Edge(Node *startingNode, Node *endingNode, bool weighted, bool directed)
         weightText = nullptr;
     }
     /*
-    if(directed) {
+    if(type == weightedDirected || type == unweightedDirected) {
         arrow = new ...
     }
     else {
@@ -91,4 +70,9 @@ void Edge::setWeightFromText()
     else {
         weightText->setPlainText(QString::number(this->weight));
     }
+}
+
+void Edge::receiveGraphType(graphType type)
+{
+    this->type = type;
 }

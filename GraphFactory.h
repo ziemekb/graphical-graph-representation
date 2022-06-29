@@ -4,9 +4,13 @@
 #include "AbstractGraph.h"
 #include "MainWindow.h"
 
-class GraphFactory {
+class GraphFactory : public QObject {
+Q_OBJECT
 public:
     AbstractGraph *getGraph(const graphType type);
+
+signals:
+    graphType graphTypeSignal(graphType type);
 
 };
 

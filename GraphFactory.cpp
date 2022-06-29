@@ -4,6 +4,10 @@
 
 AbstractGraph *GraphFactory::getGraph(const graphType type)
 {
+    Edge edge;
+    connect(this, &GraphFactory::graphTypeSignal, &edge, &Edge::receiveGraphType);
+    emit graphTypeSignal(type);
+
     if(type == unweightedUndirected) {
         return new UnweightedUndirectedGraph;
     }
