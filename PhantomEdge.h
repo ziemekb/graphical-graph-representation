@@ -15,9 +15,11 @@ private:
 
 public slots:
     void receiveNode(const QPointF &pos, Node *node);
+    void receiveWeightChange(Edge *edge, int weight);
 
 signals:
     void edgeToBePlaced(Edge *edge);
+    void weightChangeSignal(Edge *edge, int weight);
 };
 
 #endif // PHANTOMEDGE_H

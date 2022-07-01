@@ -26,6 +26,9 @@ private:
 
 public slots:
     void receiveGraphType(graphType type);
+
+signals:
+    void weightChangeSignal(Edge *edge, int weight);
 };
 
 #endif // EDGE_H

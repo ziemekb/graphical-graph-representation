@@ -20,7 +20,6 @@ void WeightedUndirectedGraph::removeEdge(Edge *edge)
 
 void WeightedUndirectedGraph::setWeight(Edge *edge, int weight)
 {
-    edge->setWeight(weight);
     this->adjList[edge->startingNode][edge->endingNode] = weight;
     this->adjList[edge->endingNode][edge->startingNode] = weight;
 }

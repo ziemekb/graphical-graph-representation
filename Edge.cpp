@@ -18,8 +18,6 @@ Edge::Edge(Node *startingNode, Node *endingNode)
     this->endingNode = endingNode;
     this->weight = 1;
 
-    qDebug() << type;
-
     if(type == weightedUndirected || type == weightedDirected) {
         weightText = new QGraphicsTextItem(this);
         weightText->setPlainText(QString::number(weight));
@@ -45,8 +43,8 @@ Edge::~Edge()
 {
     startingNode = nullptr;
     endingNode = nullptr;
+    //this->disconnect();
 }
-
 
 int Edge::getWeight()
 {
@@ -56,6 +54,7 @@ int Edge::getWeight()
 void Edge::setWeight(int weight)
 {
     this->weight = weight;
+    emit weightChangeSignal(this, weight);
 }
 
 void Edge::setWeightFromText()
@@ -65,7 +64,7 @@ void Edge::setWeightFromText()
     int tempWeight = weightText->toPlainText().QString::toInt(&ok);
 
     if(ok) {
-        this->weight = tempWeight;
+        setWeight(tempWeight);
     }
     else {
         weightText->setPlainText(QString::number(this->weight));
