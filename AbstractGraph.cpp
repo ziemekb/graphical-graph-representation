@@ -26,6 +26,37 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     }
 }
 
+void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
+{
+    std::queue<Node*> queue;
+
+    queue.push(startingNode);
+
+    Node *frontNode;
+
+    while(!queue.empty()) {
+
+        frontNode = queue.front();
+        nodesToColor.enqueue(frontNode);
+
+        if(frontNode == soughtNode) {
+            emit nodesToColorSignal(nodesToColor);
+            return;
+        }
+        visited[frontNode] = true;
+        queue.pop();
+
+        QHash<Node*, int>::const_iterator i;
+
+        for(i  = adjList[frontNode].constBegin(); i != adjList[frontNode].constEnd(); ++i) {
+            if(!visited[i.key()]) {
+                queue.push(i.key());
+                visited[i.key()] = true;
+            }
+        }
+    }
+}
+
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
@@ -43,9 +74,11 @@ void AbstractGraph::receiveNode(Node *node)
     switch(aType) {
     case dfs:
         this->DFS(algorithmStartingNode, algorithmEndingNode);
+        qDebug() << "dfs";
         break;
     case bfs:
-        //this->BFS(algorithmStartingNode, algorithmEndingNode);
+        this->BFS(algorithmStartingNode, algorithmEndingNode);
+        qDebug() << "bfs";
         break;
     case dijkstra:
         //this->dijkstra(algorithmStartingNode, algorithmEndingNode);

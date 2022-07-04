@@ -25,6 +25,7 @@ public:
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
     void DFS(Node* firstNode, Node* searchedNode);
+    void BFS(Node* firstNode, Node* searchedNode);
     QList<Node*> getKeys();
 
 signals:
