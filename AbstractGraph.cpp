@@ -74,11 +74,9 @@ void AbstractGraph::receiveNode(Node *node)
     switch(aType) {
     case dfs:
         this->DFS(algorithmStartingNode, algorithmEndingNode);
-        qDebug() << "dfs";
         break;
     case bfs:
         this->BFS(algorithmStartingNode, algorithmEndingNode);
-        qDebug() << "bfs";
         break;
     case dijkstra:
         //this->dijkstra(algorithmStartingNode, algorithmEndingNode);

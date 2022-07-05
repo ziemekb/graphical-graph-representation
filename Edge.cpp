@@ -8,6 +8,7 @@ Edge::Edge()
 {
     startingNode = nullptr;
     endingNode = nullptr;
+    weightText = nullptr;
     weight = 0;
 }
 
@@ -43,7 +44,10 @@ Edge::~Edge()
 {
     startingNode = nullptr;
     endingNode = nullptr;
-    //this->disconnect();
+    weightText = nullptr;
+    if(type == weightedUndirected || type == weightedDirected) {
+        this->disconnect();
+    }
 }
 
 int Edge::getWeight()
