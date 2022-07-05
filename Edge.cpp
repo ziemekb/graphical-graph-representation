@@ -14,7 +14,8 @@ Edge::Edge()
 
 Edge::Edge(Node *startingNode, Node *endingNode)
 {
-    this->setLine(QLineF(startingNode->getCenter(), endingNode->getCenter()));
+    this->setLine(shortenQLineF(startingNode->getCenter(), endingNode->getCenter()));
+
     this->startingNode = startingNode;
     this->endingNode = endingNode;
     this->weight = 1;
@@ -73,6 +74,17 @@ void Edge::setWeightFromText()
     else {
         weightText->setPlainText(QString::number(this->weight));
     }
+}
+
+QLineF Edge::shortenQLineF(QPointF startingPoint, QPointF endingPoint)
+{
+    QLineF startingLine(startingPoint, endingPoint);
+    QLineF endingLine(endingPoint, startingPoint);
+
+    startingLine.setLength(startingLine.length() - Node::nodeHeight/2);
+    endingLine.setLength(endingLine.length() - Node::nodeHeight/2);
+
+    return QLineF(startingLine.p2(), endingLine.p2());
 }
 
 void Edge::receiveGraphType(graphType type)

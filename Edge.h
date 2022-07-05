@@ -19,10 +19,12 @@ public:
     void setWeight(int weight);
 
 private:
+    static graphType type;
     int weight;
     QGraphicsTextItem *weightText;
     void setWeightFromText();
-    static graphType type;
+
+    QLineF shortenQLineF(QPointF startingPoint, QPointF endingPoint);
 
 public slots:
     void receiveGraphType(graphType type);
