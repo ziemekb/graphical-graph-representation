@@ -3,12 +3,16 @@
 #include <QtMath>
 
 graphType Edge::type;
+const qreal Edge::arrowAngle = 30;
+const qreal Edge::arrowLength = 20;
 
 Edge::Edge()
 {
     startingNode = nullptr;
     endingNode = nullptr;
     weightText = nullptr;
+    leftArrow = nullptr;
+    rightArrow = nullptr;
     weight = 0;
 }
 
@@ -31,14 +35,27 @@ Edge::Edge(Node *startingNode, Node *endingNode)
     else {
         weightText = nullptr;
     }
-    /*
+
     if(type == weightedDirected || type == unweightedDirected) {
-        arrow = new ...
+        leftArrow = new QGraphicsLineItem(this);
+        rightArrow = new QGraphicsLineItem(this);
+
+        QLineF line;
+        line.setP1(this->line().p1());
+        line.setLength(arrowLength);
+        line.setAngle(this->line().angle() - arrowAngle);
+
+        leftArrow->setLine(line);
+
+        line.setAngle(this->line().angle() + arrowAngle);
+
+        rightArrow->setLine(line);
     }
     else {
-
+        leftArrow = nullptr;
+        rightArrow = nullptr;
     }
-    */
+
 }
 
 Edge::~Edge()

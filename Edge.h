@@ -26,6 +26,11 @@ private:
 
     QLineF shortenQLineF(QPointF startingPoint, QPointF endingPoint);
 
+    const static qreal arrowAngle;
+    const static qreal arrowLength;
+    QGraphicsLineItem *leftArrow;
+    QGraphicsLineItem *rightArrow;
+
 public slots:
     void receiveGraphType(graphType type);
 
