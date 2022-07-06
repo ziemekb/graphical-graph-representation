@@ -2,8 +2,8 @@
 
 void UnweightedUndirectedGraph::addEdge(Node *startingNode, Node *endingNode)
 {
-    this->adjList[startingNode].insert(endingNode, 1);
-    this->adjList[endingNode].insert(startingNode, 1);
+    adjList[startingNode].insert(endingNode, 1);
+    adjList[endingNode].insert(startingNode, 1);
 }
 
 void UnweightedUndirectedGraph::addEdge(Edge *edge) {

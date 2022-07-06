@@ -1,9 +1,9 @@
-#ifndef UNWEIGHTEDUNDIRECTEDGRAPH_H
-#define UNWEIGHTEDUNDIRECTEDGRAPH_H
+#ifndef UNWEIGHTEDDIRECTEDGRAPH_H
+#define UNWEIGHTEDDIRECTEDGRAPH_H
 
 #include "AbstractGraph.h"
 
-class UnweightedUndirectedGraph : public AbstractGraph {
+class UnweightedDirectedGraph : public AbstractGraph {
 
 public:
     void addEdge(Node *startingNode, Node *endingNode) override;
@@ -11,4 +11,4 @@ public:
     void removeEdge(Edge *edge) override;
 };
 
-#endif // UNWEIGHTEDUNDIRECTEDGRAPH_H
+#endif // UNWEIGHTEDDIRECTEDGRAPH_H

@@ -20,6 +20,7 @@ SOURCES += \
         Node.cpp \
         NodeCursor.cpp \
         PhantomEdge.cpp \
+        UnweightedDirectedGraph.cpp \
         UnweightedUndirectedGraph.cpp \
         WeightedUndirectedGraph.cpp \
         main.cpp
@@ -41,6 +42,7 @@ HEADERS += \
     Node.h \
     NodeCursor.h \
     PhantomEdge.h \
+    UnweightedDirectedGraph.h \
     UnweightedUndirectedGraph.h \
     WeightedUndirectedGraph.h
 

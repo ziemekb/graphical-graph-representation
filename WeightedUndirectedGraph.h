@@ -4,6 +4,7 @@
 #include "AbstractGraph.h"
 
 class WeightedUndirectedGraph : public AbstractGraph {
+
 public:
     void addEdge(Node *startingNode, Node *endingNode) override;
     void addEdge(Edge *edge) override;
