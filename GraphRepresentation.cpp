@@ -9,6 +9,7 @@
 #include "GraphRepresentation.h"
 #include "PhantomEdge.h"
 #include "WeightedUndirectedGraph.h"
+#include "WeightedDirectedGraph.h"
 
 bool GraphRepresentation::animationState = false;
 
@@ -275,11 +276,9 @@ void GraphRepresentation::setEdgeWeight(Edge *edge, int weight)
         wuGraph->setWeight(edge, weight);
     }
 
-    /*
     WeightedDirectedGraph *wdGraph = dynamic_cast<WeightedDirectedGraph*>(graph);
 
     if(wdGraph) {
         wdGraph->setWeight(edge, weight);
     }
-    */
 }

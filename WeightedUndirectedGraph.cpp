@@ -23,4 +23,3 @@ void WeightedUndirectedGraph::setWeight(Edge *edge, int weight)
     this->adjList[edge->startingNode][edge->endingNode] = weight;
     this->adjList[edge->endingNode][edge->startingNode] = weight;
 }
-
