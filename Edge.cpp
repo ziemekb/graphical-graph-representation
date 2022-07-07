@@ -79,6 +79,20 @@ void Edge::setWeight(int weight)
     emit weightChangeSignal(this, weight);
 }
 
+void Edge::setPen(const QPen &pen)
+{
+    QGraphicsLineItem::setPen(pen);
+
+    if(weightText) {
+        weightText->setDefaultTextColor(pen.color());
+    }
+
+    if(leftArrow && rightArrow) {
+        leftArrow->setPen(pen);
+        rightArrow->setPen(pen);
+    }
+}
+
 void Edge::setWeightFromText()
 {
     bool ok;

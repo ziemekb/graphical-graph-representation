@@ -17,6 +17,7 @@ public:
     Node *endingNode;
     int getWeight();
     void setWeight(int weight);
+    void setPen(const QPen &pen);
 
 private:
     static graphType type;
