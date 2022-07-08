@@ -222,6 +222,11 @@ void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
     Edge *edge = dynamic_cast<Edge*>(item);
 
     if(edge) {
+        if(graph->containsEdge(edge)) {
+            edge->disconnect();
+            edge->deleteLater();
+            return;
+        }
         graph->addEdge(edge);
     }
 

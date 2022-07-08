@@ -28,6 +28,7 @@ Edge::Edge(Node *startingNode, Node *endingNode)
         weightText = new QGraphicsTextItem(this);
         weightText->setPlainText(QString::number(weight));
         weightText->setTextInteractionFlags(Qt::TextEditorInteraction);
+        //weightText->setRotation(-this->line().angle() + 180);
         weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2,
                            qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - 25);
         connect(weightText->document(), &QTextDocument::contentsChanged, this, &Edge::setWeightFromText);

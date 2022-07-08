@@ -6,6 +6,11 @@ AbstractGraph::AbstractGraph()
     algorithmEndingNode = nullptr;
 }
 
+bool AbstractGraph::containsEdge(Edge *edge)
+{
+    return adjList[edge->startingNode].contains(edge->endingNode);
+}
+
 void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
 {
     visited[startingNode] = true;
