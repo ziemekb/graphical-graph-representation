@@ -62,6 +62,11 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
     }
 }
 
+void AbstractGraph::Dijkstra(Node *startingNode, Node *soughtNode)
+{
+    std::priority_queue<Node*, std::vector<Node*>, std::function<bool(Node*, Node*)>> pq(Node::greaterNode);
+}
+
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();

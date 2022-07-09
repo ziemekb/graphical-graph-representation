@@ -9,6 +9,16 @@ int Node::nodeCount = 0;
 std::priority_queue<int, std::vector<int>, std::greater<int>> Node::unusedNodeNumbers;
 
 
+bool Node::greaterNode(Node *firstNode, Node *secondNode)
+{
+    return firstNode->data(nodeType).value<int>() > secondNode->data(nodeType).value<int>();
+}
+
+bool Node::lesserNode(Node *firstNode, Node *secondNode)
+{
+    return firstNode->data(nodeType).value<int>() < secondNode->data(nodeType).value<int>();
+}
+
 Node::Node() {
     setPen(QPen(Qt::black));
     setRect(0, 0, nodeWidth, nodeHeight);
