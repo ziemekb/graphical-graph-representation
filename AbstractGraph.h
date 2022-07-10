@@ -14,7 +14,7 @@ enum dataType {
 enum algorithmType {
     dfs,
     bfs,
-    dijkstra
+    dijkstras
 };
 
 class AbstractGraph : public QObject {
@@ -24,6 +24,7 @@ public:
     virtual void addEdge(Node* node1, Node* node2) = 0;
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
+    void addNode(Node *node);
     bool containsEdge(Edge *edge);
     void DFS(Node* firstNode, Node* searchedNode);
     void BFS(Node* firstNode, Node* searchedNode);

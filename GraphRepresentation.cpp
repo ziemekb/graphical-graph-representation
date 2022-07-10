@@ -115,7 +115,7 @@ void GraphRepresentation::generateToolBar(const graphType type)
 
     algorithmComboBox->addItem("DFS", dfs);
     algorithmComboBox->addItem("BFS", bfs);
-    algorithmComboBox->addItem("Dijkstra's", dijkstra);
+    algorithmComboBox->addItem("Dijkstra's", dijkstras);
 
     graphToolBar->addWidget(algorithmComboBox);
 
@@ -220,6 +220,7 @@ void GraphRepresentation::returnToBuildMode()
 void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
 {
     Edge *edge = dynamic_cast<Edge*>(item);
+    Node *node = dynamic_cast<Node*>(item);
 
     if(edge) {
         if(graph->containsEdge(edge)) {
@@ -228,6 +229,9 @@ void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
             return;
         }
         graph->addEdge(edge);
+    }
+    else if(node) {
+        graph->addNode(node);
     }
 
     this->addItem(item);

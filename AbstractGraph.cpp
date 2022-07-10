@@ -6,6 +6,11 @@ AbstractGraph::AbstractGraph()
     algorithmEndingNode = nullptr;
 }
 
+void AbstractGraph::addNode(Node *node)
+{
+    adjList[node];
+}
+
 bool AbstractGraph::containsEdge(Edge *edge)
 {
     return adjList[edge->startingNode].contains(edge->endingNode);
@@ -62,11 +67,6 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
     }
 }
 
-void AbstractGraph::Dijkstra(Node *startingNode, Node *soughtNode)
-{
-    std::priority_queue<Node*, std::vector<Node*>, std::function<bool(Node*, Node*)>> pq(Node::greaterNode);
-}
-
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
@@ -88,7 +88,7 @@ void AbstractGraph::receiveNode(Node *node)
     case bfs:
         this->BFS(algorithmStartingNode, algorithmEndingNode);
         break;
-    case dijkstra:
+    case dijkstras:
         //this->dijkstra(algorithmStartingNode, algorithmEndingNode);
         break;
     default:
