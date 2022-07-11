@@ -67,6 +67,31 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
     }
 }
 
+void AbstractGraph::dijkstra(Node *firstNode, Node *secondNode)
+{
+    std::vector<std::pair<Node*, int>> nodes;
+
+    for(auto const &e : this->getKeys()) {
+        if(e == firstNode) {
+            nodes.push_back(std::make_pair(e, 0));
+        }
+        else {
+            nodes.push_back(std::make_pair(e, INT_MAX));
+        }
+    }
+    auto distanceComparator = [] (std::pair<Node*, int> firstPair, std::pair<Node*, int> secondPair) {
+        return firstPair.second > secondPair.second;
+    };
+
+    std::priority_queue<std::pair<Node*, int>, std::vector<std::pair<Node*, int>>,
+            decltype(distanceComparator)> pq(nodes.begin(), nodes.end(), distanceComparator);
+
+    while(!pq.empty()) {
+        qDebug() << pq.top().first->data(nodeType).value<int>() << pq.top().second;
+        pq.pop();
+    }
+}
+
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
@@ -89,7 +114,7 @@ void AbstractGraph::receiveNode(Node *node)
         this->BFS(algorithmStartingNode, algorithmEndingNode);
         break;
     case dijkstras:
-        //this->dijkstra(algorithmStartingNode, algorithmEndingNode);
+        this->dijkstra(algorithmStartingNode, algorithmEndingNode);
         break;
     default:
         qDebug() << "unknown algorithm type";

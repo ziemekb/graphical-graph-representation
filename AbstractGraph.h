@@ -28,6 +28,7 @@ public:
     bool containsEdge(Edge *edge);
     void DFS(Node* firstNode, Node* searchedNode);
     void BFS(Node* firstNode, Node* searchedNode);
+    void dijkstra(Node* firstNode, Node* secondNode);
     QList<Node*> getKeys();
 
 signals:
