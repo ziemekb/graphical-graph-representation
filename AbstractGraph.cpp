@@ -1,3 +1,4 @@
+#include <QStack>
 #include "AbstractGraph.h"
 
 AbstractGraph::AbstractGraph()
@@ -67,29 +68,61 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
     }
 }
 
-void AbstractGraph::dijkstra(Node *firstNode, Node *secondNode)
+void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
 {
-    std::vector<std::pair<Node*, int>> nodes;
-
-    for(auto const &e : this->getKeys()) {
-        if(e == firstNode) {
-            nodes.push_back(std::make_pair(e, 0));
-        }
-        else {
-            nodes.push_back(std::make_pair(e, INT_MAX));
-        }
-    }
+    //creating a priority queue and adding startingNode to it with distance 0
     auto distanceComparator = [] (std::pair<Node*, int> firstPair, std::pair<Node*, int> secondPair) {
         return firstPair.second > secondPair.second;
     };
 
     std::priority_queue<std::pair<Node*, int>, std::vector<std::pair<Node*, int>>,
-            decltype(distanceComparator)> pq(nodes.begin(), nodes.end(), distanceComparator);
+            decltype(distanceComparator)> pq(distanceComparator);
 
-    while(!pq.empty()) {
-        qDebug() << pq.top().first->data(nodeType).value<int>() << pq.top().second;
-        pq.pop();
+    pq.push(std::make_pair(startingNode, 0));
+
+
+    //creating distance hash table and assigning maximal value to every node except startingNode
+    QHash<Node*, int> dist;
+
+    for(auto const &e : this->getKeys()) {
+        dist[e] = INT_MAX;
     }
+
+    dist[startingNode] = 0;
+
+    //hash table for tracking parents of nodes
+    QHash<Node*, Node*> parent;
+
+    //main dijkstra loop
+    while(!pq.empty()) {
+
+        Node *topNode = pq.top().first;
+        pq.pop();
+
+        QHash<Node*, int>::const_iterator i;
+
+        for(i = adjList[topNode].constBegin(); i != adjList[topNode].constEnd(); ++i) {
+
+            if(dist[i.key()] > dist[topNode] + i.value()) {
+                dist[i.key()] = dist[topNode] + i.value();
+                pq.push(std::make_pair(i.key(), dist[i.key()]));
+                parent[i.key()] = topNode;
+            }
+        }
+    }
+
+    //finding shortest path from startingNode to soughtNode
+    Node *node = soughtNode;
+    nodesToColor.enqueue(node);
+
+    while(node != startingNode) {
+        node = parent[node];
+        nodesToColor.enqueue(node);
+    }
+
+    reverseQueue(nodesToColor);
+
+    emit nodesToColorSignal(nodesToColor);
 }
 
 QList<Node*> AbstractGraph::getKeys()
@@ -136,5 +169,18 @@ void AbstractGraph::resetVisited()
 {
     for(auto const &e : getKeys()) {
         visited[e] = false;
+    }
+}
+
+void AbstractGraph::reverseQueue(QQueue<Node*> &queue)
+{
+    QStack<Node*> stack;
+
+    while(!queue.empty()) {
+        stack.push(queue.dequeue());
+    }
+
+    while(!stack.empty()) {
+        queue.enqueue(stack.pop());
     }
 }

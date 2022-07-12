@@ -47,6 +47,7 @@ protected:
 
 private:
     void resetVisited();
+    void reverseQueue(QQueue<Node*> &queue);
 };
 
 inline bool operator==(const Node &node1, const Node &node2)
