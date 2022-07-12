@@ -69,6 +69,11 @@ QColor Node::getColor()
     return this->color;
 }
 
+int Node::getData()
+{
+    return this->data(nodeType).value<int>();
+}
+
 Node::~Node()
 {
     unusedNodeNumbers.push(this->nodeNumber);

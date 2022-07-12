@@ -27,6 +27,8 @@ public:
     void setColor(QColor color);
     QColor getColor();
 
+    int getData();
+
     ~Node();
 
 private:
