@@ -125,6 +125,54 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
     emit nodesToColorSignal(nodesToColor);
 }
 
+void AbstractGraph::primMST()
+{
+    QHash<Node*, int> dist;
+    QHash<Node*, bool> present;
+
+    auto distanceComparator = [] (std::pair<Node*, int> firstPair, std::pair<Node*, int> secondPair) {
+        return firstPair.second > secondPair.second;
+    };
+
+    std::priority_queue<std::pair<Node*, int>, std::vector<std::pair<Node*, int>>,
+            decltype(distanceComparator)> pq(distanceComparator);
+
+    for(auto const &e : this->getKeys()) {
+        dist[e] = INT_MAX;
+        present[e] = false;
+    }
+
+    for(auto const &e : this->getKeys()) {
+        if(!adjList[e].empty()) {
+            pq.push(std::make_pair(e, 0));
+            dist[e] = 0;
+            break;
+        }
+    }
+
+    while(!pq.empty()) {
+
+        Node *topNode = pq.top().first;
+        pq.pop();
+
+        if(!present[topNode]) {
+
+            present[topNode] = true;
+            nodesToColor.enqueue(topNode);
+
+            QHash<Node*, int>::const_iterator i;
+
+            for(i = adjList[topNode].constBegin(); i != adjList[topNode].constEnd(); ++i) {
+                if(!present[i.key()]) {
+                    pq.push(std::make_pair(i.key(), i.value()));
+                }
+            }
+        }
+    }
+
+    emit nodesToColorSignal(nodesToColor);
+}
+
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
@@ -148,6 +196,9 @@ void AbstractGraph::receiveNode(Node *node)
         break;
     case dijkstras:
         this->dijkstra(algorithmStartingNode, algorithmEndingNode);
+        break;
+    case primsmst:
+        this->primMST();
         break;
     default:
         qDebug() << "unknown algorithm type";

@@ -116,6 +116,7 @@ void GraphRepresentation::generateToolBar(const graphType type)
     algorithmComboBox->addItem("DFS", dfs);
     algorithmComboBox->addItem("BFS", bfs);
     algorithmComboBox->addItem("Dijkstra's", dijkstras);
+    algorithmComboBox->addItem("Prim's MST", primsmst);
 
     graphToolBar->addWidget(algorithmComboBox);
 

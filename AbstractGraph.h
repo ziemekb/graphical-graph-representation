@@ -14,7 +14,8 @@ enum dataType {
 enum algorithmType {
     dfs,
     bfs,
-    dijkstras
+    dijkstras,
+    primsmst
 };
 
 class AbstractGraph : public QObject {
@@ -29,6 +30,7 @@ public:
     void DFS(Node* firstNode, Node* searchedNode);
     void BFS(Node* firstNode, Node* searchedNode);
     void dijkstra(Node* firstNode, Node* secondNode);
+    void primMST();
     QList<Node*> getKeys();
 
 signals:
