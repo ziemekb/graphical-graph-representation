@@ -7,7 +7,8 @@
 #include "MainWindow.h"
 
 class Edge : public QObject, public QGraphicsLineItem {
-Q_OBJECT
+    Q_OBJECT
+    Q_PROPERTY(QColor color READ getColor WRITE setColor)
 public:
     Edge();
     Edge(Node *startingNode, Node *endingNode);
@@ -17,6 +18,9 @@ public:
     Node *endingNode;
     int getWeight();
     void setPen(const QPen &pen);
+
+    void setColor(QColor color);
+    QColor getColor();
 
 private:
     static graphType type;

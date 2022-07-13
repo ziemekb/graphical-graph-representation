@@ -94,6 +94,21 @@ void Edge::setPen(const QPen &pen)
     }
 }
 
+void Edge::setColor(QColor color)
+{
+    this->setPen(color);
+
+    if(leftArrow && rightArrow) {
+        leftArrow->setPen(color);
+        rightArrow->setPen(color);
+    }
+}
+
+QColor Edge::getColor()
+{
+    return this->pen().color();
+}
+
 void Edge::setWeightFromText()
 {
     bool ok;
