@@ -77,7 +77,6 @@ int Edge::getWeight()
 void Edge::setWeight(int weight)
 {
     this->weight = weight;
-    emit weightChangeSignal(this, weight);
 }
 
 void Edge::setPen(const QPen &pen)

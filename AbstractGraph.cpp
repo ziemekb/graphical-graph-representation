@@ -27,7 +27,7 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
         emit nodesToColorSignal(nodesToColor);
     }
     else {
-        QHash<Node*, int>::const_iterator i;
+        QHash<Node*, Edge*>::const_iterator i;
 
         for(i  = adjList[startingNode].constBegin(); i != adjList[startingNode].constEnd(); ++i) {
             if(!visited[i.key()]) {
@@ -57,7 +57,7 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
         visited[frontNode] = true;
         queue.pop();
 
-        QHash<Node*, int>::const_iterator i;
+        QHash<Node*, Edge*>::const_iterator i;
 
         for(i  = adjList[frontNode].constBegin(); i != adjList[frontNode].constEnd(); ++i) {
             if(!visited[i.key()]) {
@@ -99,12 +99,12 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
         Node *topNode = pq.top().first;
         pq.pop();
 
-        QHash<Node*, int>::const_iterator i;
+        QHash<Node*, Edge*>::const_iterator i;
 
         for(i = adjList[topNode].constBegin(); i != adjList[topNode].constEnd(); ++i) {
 
-            if(dist[i.key()] > dist[topNode] + i.value()) {
-                dist[i.key()] = dist[topNode] + i.value();
+            if(dist[i.key()] > dist[topNode] + i.value()->getWeight()) {
+                dist[i.key()] = dist[topNode] + i.value()->getWeight();
                 pq.push(std::make_pair(i.key(), dist[i.key()]));
                 parent[i.key()] = topNode;
             }
@@ -160,11 +160,11 @@ void AbstractGraph::primMST()
             present[topNode] = true;
             nodesToColor.enqueue(topNode);
 
-            QHash<Node*, int>::const_iterator i;
+            QHash<Node*, Edge*>::const_iterator i;
 
             for(i = adjList[topNode].constBegin(); i != adjList[topNode].constEnd(); ++i) {
                 if(!present[i.key()]) {
-                    pq.push(std::make_pair(i.key(), i.value()));
+                    pq.push(std::make_pair(i.key(), i.value()->getWeight()));
                 }
             }
         }

@@ -31,7 +31,6 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
     connect(buildToolsManager.getNodeCursor(), &NodeCursor::nodeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
     connect(this, &GraphRepresentation::clickedNodeWithPos, buildToolsManager.getPhantomEdge(), &PhantomEdge::receiveNode);
     connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::edgeToBePlaced, this, &GraphRepresentation::placeGraphicsItem);
-    connect(buildToolsManager.getPhantomEdge(), &PhantomEdge::weightChangeSignal, this, &GraphRepresentation::setEdgeWeight);
     connect(buildToolsManager.getDestructionCursor(), &DestructionCursor::graphicsItemToRemove, this, &GraphRepresentation::removeGraphicsItem);
     connect(this, &GraphRepresentation::clickedNode, graph, &AbstractGraph::receiveNode);
     connect(startAlgorithmButton, &QPushButton::clicked, this, &GraphRepresentation::drawAlgorithmAnimationPanel);
@@ -276,19 +275,4 @@ void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
     nodeColoringAnimation->addPause(1000);
 
     nodeColoringAnimation->start();
-}
-
-void GraphRepresentation::setEdgeWeight(Edge *edge, int weight)
-{
-    WeightedUndirectedGraph *wuGraph = dynamic_cast<WeightedUndirectedGraph*>(graph);
-
-    if(wuGraph) {
-        wuGraph->setWeight(edge, weight);
-    }
-
-    WeightedDirectedGraph *wdGraph = dynamic_cast<WeightedDirectedGraph*>(graph);
-
-    if(wdGraph) {
-        wdGraph->setWeight(edge, weight);
-    }
 }

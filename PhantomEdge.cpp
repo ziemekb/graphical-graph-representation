@@ -11,7 +11,6 @@ void PhantomEdge::receiveNode(const QPointF &pos, Node *node)
 {
     if(startingNode) {
         Edge *edge = new Edge(startingNode, node);
-        connect(edge, &Edge::weightChangeSignal, this, &PhantomEdge::receiveWeightChange);
         emit edgeToBePlaced(edge);
         startingNode = nullptr;
         this->hide();

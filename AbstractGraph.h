@@ -22,7 +22,6 @@ class AbstractGraph : public QObject {
 Q_OBJECT
 public:
     AbstractGraph();
-    virtual void addEdge(Node* node1, Node* node2) = 0;
     virtual void addEdge(Edge *edge) = 0;
     virtual void removeEdge(Edge *edge) = 0;
     void addNode(Node *node);
@@ -40,7 +39,7 @@ public slots:
     void getAlgorithmType(algorithmType aType);
 
 protected:
-    QHash<Node*, QHash<Node*, int>> adjList;
+    QHash<Node*, QHash<Node*, Edge*>> adjList;
     QMap <Node*, bool> visited;
     QQueue<Node*> nodesToColor;
     Node *algorithmStartingNode;

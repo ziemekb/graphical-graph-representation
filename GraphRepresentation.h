@@ -60,7 +60,6 @@ public slots:
     void removeGraphicsItem(QGraphicsItem *item);
     void drawAlgorithmAnimationPanel();
     void showNodeColoringAnimation(QQueue<Node*> nodesToColor);
-    void setEdgeWeight(Edge *edge, int weight);
 
 signals:
     void clickedNodeWithPos(const QPointF &pos, Node *node);
