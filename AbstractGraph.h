@@ -42,6 +42,7 @@ protected:
     QHash<Node*, QHash<Node*, Edge*>> adjList;
     QMap <Node*, bool> visited;
     QQueue<Node*> nodesToColor;
+    QQueue<Edge*> edgesToColor;
     Node *algorithmStartingNode;
     Node *algorithmEndingNode;
     algorithmType aType;

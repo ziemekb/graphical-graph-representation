@@ -127,25 +127,22 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
 
 void AbstractGraph::primMST()
 {
-    QHash<Node*, int> dist;
     QHash<Node*, bool> present;
 
-    auto distanceComparator = [] (std::pair<Node*, int> firstPair, std::pair<Node*, int> secondPair) {
-        return firstPair.second > secondPair.second;
+    auto distanceComparator = [] (std::pair<Node*, Edge*> firstPair, std::pair<Node*, Edge*> secondPair) {
+        return firstPair.second->getWeight() > secondPair.second->getWeight();
     };
 
-    std::priority_queue<std::pair<Node*, int>, std::vector<std::pair<Node*, int>>,
+    std::priority_queue<std::pair<Node*, Edge*>, std::vector<std::pair<Node*, Edge*>>,
             decltype(distanceComparator)> pq(distanceComparator);
 
     for(auto const &e : this->getKeys()) {
-        dist[e] = INT_MAX;
         present[e] = false;
     }
 
     for(auto const &e : this->getKeys()) {
         if(!adjList[e].empty()) {
-            pq.push(std::make_pair(e, 0));
-            dist[e] = 0;
+            pq.push(std::make_pair(e, new Edge));
             break;
         }
     }
@@ -153,21 +150,28 @@ void AbstractGraph::primMST()
     while(!pq.empty()) {
 
         Node *topNode = pq.top().first;
+        Edge *topEdge = pq.top().second;
+
         pq.pop();
 
         if(!present[topNode]) {
 
             present[topNode] = true;
             nodesToColor.enqueue(topNode);
+            edgesToColor.enqueue(topEdge);
 
             QHash<Node*, Edge*>::const_iterator i;
 
             for(i = adjList[topNode].constBegin(); i != adjList[topNode].constEnd(); ++i) {
                 if(!present[i.key()]) {
-                    pq.push(std::make_pair(i.key(), i.value()->getWeight()));
+                    pq.push(std::make_pair(i.key(), i.value()));
                 }
             }
         }
+    }
+
+    while(!edgesToColor.empty()) {
+        edgesToColor.dequeue()->setColor(Qt::red);
     }
 
     emit nodesToColorSignal(nodesToColor);
