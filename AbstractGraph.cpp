@@ -24,7 +24,7 @@ void AbstractGraph::DFS(Node* startingNode, Node* soughtNode)
     nodesToColor.enqueue(startingNode);
 
     if(startingNode == soughtNode) {
-        emit nodesToColorSignal(nodesToColor);
+        emit graphColoringSignal(nodesToColor);
     }
     else {
         QHash<Node*, Edge*>::const_iterator i;
@@ -51,7 +51,7 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
         nodesToColor.enqueue(frontNode);
 
         if(frontNode == soughtNode) {
-            emit nodesToColorSignal(nodesToColor);
+            emit graphColoringSignal(nodesToColor);
             return;
         }
         visited[frontNode] = true;
@@ -122,7 +122,7 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
 
     reverseQueue(nodesToColor);
 
-    emit nodesToColorSignal(nodesToColor);
+    emit graphColoringSignal(nodesToColor);
 }
 
 void AbstractGraph::primMST()
@@ -170,11 +170,13 @@ void AbstractGraph::primMST()
         }
     }
 
+    /*
     while(!edgesToColor.empty()) {
         edgesToColor.dequeue()->setColor(Qt::red);
     }
+    */
 
-    emit nodesToColorSignal(nodesToColor);
+    emit graphColoringSignal(nodesToColor, edgesToColor);
 }
 
 QList<Node*> AbstractGraph::getKeys()
@@ -213,6 +215,7 @@ void AbstractGraph::receiveNode(Node *node)
     algorithmEndingNode = nullptr;
     resetVisited();
     nodesToColor.clear();
+    edgesToColor.clear();
 }
 
 void AbstractGraph::getAlgorithmType(algorithmType aType)

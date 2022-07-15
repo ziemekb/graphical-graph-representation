@@ -38,7 +38,7 @@ GraphRepresentation::GraphRepresentation(const graphType type) {
         emit algorithmTypeSignal(static_cast<algorithmType>(algorithmComboBox->currentData().toInt()));
     });
     connect(this, &GraphRepresentation::algorithmTypeSignal, graph, &AbstractGraph::getAlgorithmType);
-    connect(graph, &AbstractGraph::nodesToColorSignal, this, &GraphRepresentation::showNodeColoringAnimation);
+    connect(graph, &AbstractGraph::graphColoringSignal, this, &GraphRepresentation::showNodeColoringAnimation);
     connect(quitAnimationButton, &QPushButton::clicked, this, &GraphRepresentation::returnToBuildMode);
     connect(initialAnimation, &QParallelAnimationGroup::finished, this, [this]{this->initialAnimation->clear();});
     connect(nodeColoringAnimation, &QSequentialAnimationGroup::finished, this, [this]{this->nodeColoringAnimation->clear();});
@@ -151,7 +151,7 @@ void GraphRepresentation::checkForNode(const QPointF &pos)
     }
 }
 
-void GraphRepresentation::setInitialAnimation(QQueue<Node*> nodesToColor)
+void GraphRepresentation::setInitialAnimation(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor)
 {
     for(auto const &e : nodesToColor) {
         QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
@@ -159,6 +159,14 @@ void GraphRepresentation::setInitialAnimation(QQueue<Node*> nodesToColor)
         nodeAnim->setDuration(500);
         nodeAnim->setEndValue(QColor(Qt::transparent));
         initialAnimation->addAnimation(nodeAnim);
+    }
+
+    for(auto const &e : edgesToColor) {
+        QPropertyAnimation *edgeAnim = new QPropertyAnimation(e, "color");
+        edgeAnim->setStartValue(QColor(Qt::gray));
+        edgeAnim->setDuration(500);
+        edgeAnim->setEndValue(QColor(Qt::transparent));
+        initialAnimation->addAnimation(edgeAnim);
     }
 }
 
@@ -261,16 +269,30 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
     quitAnimationButton->show();
 }
 
-void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor)
+void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor)
 {
-    setInitialAnimation(nodesToColor);
+    setInitialAnimation(nodesToColor, edgesToColor);
+
+    QQueue<Edge*>::const_iterator edgeIte = edgesToColor.constBegin();
 
     for(auto const &e : nodesToColor) {
+
+        if(edgeIte != edgesToColor.constEnd()) {
+            QPropertyAnimation *edgeAnim = new QPropertyAnimation(*edgeIte, "color");
+            edgeAnim->setStartValue(QColor(Qt::black));
+            edgeAnim->setEndValue(QColor(Qt::red));
+            edgeAnim->setDuration(250);
+            nodeColoringAnimation->addAnimation(edgeAnim);
+
+            edgeIte++;
+        }
+
         QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
         nodeAnim->setStartValue(QColor(Qt::transparent));
-        nodeAnim->setEndValue(QBrush(Qt::gray));
+        nodeAnim->setEndValue(QColor(Qt::gray));
         nodeAnim->setDuration(500);
         nodeColoringAnimation->addAnimation(nodeAnim);
+
     }
     nodeColoringAnimation->addPause(1000);
 

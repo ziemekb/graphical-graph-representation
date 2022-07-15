@@ -44,7 +44,7 @@ private:
     GraphFactory graphFactory;
 
     QParallelAnimationGroup *initialAnimation;
-    void setInitialAnimation(QQueue<Node*> nodesToColor);
+    void setInitialAnimation(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor);
 
     QSequentialAnimationGroup *nodeColoringAnimation;
 
@@ -59,7 +59,7 @@ public slots:
     void placeGraphicsItem(QGraphicsItem *item);
     void removeGraphicsItem(QGraphicsItem *item);
     void drawAlgorithmAnimationPanel();
-    void showNodeColoringAnimation(QQueue<Node*> nodesToColor);
+    void showNodeColoringAnimation(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor);
 
 signals:
     void clickedNodeWithPos(const QPointF &pos, Node *node);

@@ -33,7 +33,7 @@ public:
     QList<Node*> getKeys();
 
 signals:
-    void nodesToColorSignal(QQueue<Node*> nodesToColor);
+    void graphColoringSignal(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor = QQueue<Edge*>());
 public slots:
     void receiveNode(Node *node);
     void getAlgorithmType(algorithmType aType);
