@@ -49,7 +49,9 @@ protected:
 
 private:
     void resetAlgorithm();
-    void reverseQueue(QQueue<Node*> &queue);
+
+    template <typename T>
+    void reverseQueue(QQueue<T*> &queue);
 };
 
 inline bool operator==(const Node &node1, const Node &node2)

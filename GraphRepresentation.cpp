@@ -280,6 +280,12 @@ void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor, 
 
     for(auto const &e : nodesToColor) {
 
+        QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
+        nodeAnim->setStartValue(QColor(Qt::transparent));
+        nodeAnim->setEndValue(QColor(Qt::gray));
+        nodeAnim->setDuration(500);
+        nodeColoringAnimation->addAnimation(nodeAnim);
+
         if(edgeIte != edgesToColor.constEnd()) {
             QPropertyAnimation *edgeAnim = new QPropertyAnimation(*edgeIte, "color");
             edgeAnim->setStartValue(QColor(Qt::black));
@@ -289,13 +295,6 @@ void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor, 
 
             edgeIte++;
         }
-
-        QPropertyAnimation *nodeAnim = new QPropertyAnimation(e, "color");
-        nodeAnim->setStartValue(QColor(Qt::transparent));
-        nodeAnim->setEndValue(QColor(Qt::gray));
-        nodeAnim->setDuration(500);
-        nodeColoringAnimation->addAnimation(nodeAnim);
-
     }
     nodeColoringAnimation->addPause(1000);
 

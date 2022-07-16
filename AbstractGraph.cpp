@@ -71,14 +71,14 @@ void AbstractGraph::BFS(Node *startingNode, Node *soughtNode)
 void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
 {
     //creating a priority queue and adding startingNode to it with distance 0
-    auto distanceComparator = [] (std::pair<Node*, int> firstPair, std::pair<Node*, int> secondPair) {
+    auto distanceComparator = [] (std::pair<Node*, Edge*> firstPair, std::pair<Node*, Edge*> secondPair) {
         return firstPair.second > secondPair.second;
     };
 
-    std::priority_queue<std::pair<Node*, int>, std::vector<std::pair<Node*, int>>,
+    std::priority_queue<std::pair<Node*, Edge*>, std::vector<std::pair<Node*, Edge*>>,
             decltype(distanceComparator)> pq(distanceComparator);
 
-    pq.push(std::make_pair(startingNode, 0));
+    pq.push(std::make_pair(startingNode, new Edge));
 
 
     //creating distance hash table and assigning maximal value to every node except startingNode
@@ -105,7 +105,7 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
 
             if(dist[i.key()] > dist[topNode] + i.value()->getWeight()) {
                 dist[i.key()] = dist[topNode] + i.value()->getWeight();
-                pq.push(std::make_pair(i.key(), dist[i.key()]));
+                pq.push(std::make_pair(i.key(), i.value()));
                 parent[i.key()] = topNode;
             }
         }
@@ -116,13 +116,15 @@ void AbstractGraph::dijkstra(Node *startingNode, Node *soughtNode)
     nodesToColor.enqueue(node);
 
     while(node != startingNode) {
+        edgesToColor.enqueue(adjList[node][parent[node]]);
         node = parent[node];
         nodesToColor.enqueue(node);
     }
 
     reverseQueue(nodesToColor);
+    reverseQueue(edgesToColor);
 
-    emit graphColoringSignal(nodesToColor);
+    emit graphColoringSignal(nodesToColor, edgesToColor);
 }
 
 void AbstractGraph::primMST()
@@ -170,11 +172,7 @@ void AbstractGraph::primMST()
         }
     }
 
-    /*
-    while(!edgesToColor.empty()) {
-        edgesToColor.dequeue()->setColor(Qt::red);
-    }
-    */
+    edgesToColor.pop_front();
 
     emit graphColoringSignal(nodesToColor, edgesToColor);
 }
@@ -244,9 +242,10 @@ void AbstractGraph::resetAlgorithm()
     edgesToColor.clear();
 }
 
-void AbstractGraph::reverseQueue(QQueue<Node*> &queue)
+template <typename T>
+void AbstractGraph::reverseQueue(QQueue<T*> &queue)
 {
-    QStack<Node*> stack;
+    QStack<T*> stack;
 
     while(!queue.empty()) {
         stack.push(queue.dequeue());
