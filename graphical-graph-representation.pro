@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
         AbstractGraph.cpp \
+        AlgorithmComboBox.cpp \
         BuildToolsManager.cpp \
         DestructionCursor.cpp \
         Edge.cpp \
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     AbstractGraph.h \
+    AlgorithmComboBox.h \
     BuildToolsManager.h \
     DestructionCursor.h \
     Edge.h \

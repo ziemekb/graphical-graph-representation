@@ -109,7 +109,7 @@ void GraphRepresentation::generateToolBar(const graphType type)
     graphToolBar->addSeparator();
 
     //Adding QComboBox with available algorithms
-    algorithmComboBox = new QComboBox; // in future this needs to be seperate function with items added depending on the graphType
+    algorithmComboBox = new AlgorithmComboBox; // in future this needs to be seperate function with items added depending on the graphType
     //algorithmComboBox->setStyle(...); // algorithmComboBox needs to be changed so that the pop up list always rolls down
 
     algorithmComboBox->addItem("DFS", dfs);

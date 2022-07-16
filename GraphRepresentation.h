@@ -14,6 +14,7 @@
 #include "BuildToolsManager.h"
 #include "AbstractGraph.h"
 #include "GraphFactory.h"
+#include "AlgorithmComboBox.h"
 
 
 class GraphRepresentation : public QGraphicsScene {
@@ -33,7 +34,7 @@ private:
     void resetRadioButtons();
     void generateToolBar(const graphType type);
 
-    QComboBox *algorithmComboBox;
+    AlgorithmComboBox *algorithmComboBox;
     //const QStringList algorithmTypes = {"DFS", "BFS", "Dijkstra"};
     QPushButton *startAlgorithmButton;
 

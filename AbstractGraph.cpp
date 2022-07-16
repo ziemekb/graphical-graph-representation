@@ -172,6 +172,7 @@ void AbstractGraph::primMST()
         }
     }
 
+    //first added edge is a dummy edge thus getting rid of it
     edgesToColor.pop_front();
 
     emit graphColoringSignal(nodesToColor, edgesToColor);
