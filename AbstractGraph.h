@@ -48,7 +48,7 @@ protected:
     algorithmType aType;
 
 private:
-    void resetVisited();
+    void resetAlgorithm();
     void reverseQueue(QQueue<Node*> &queue);
 };
 

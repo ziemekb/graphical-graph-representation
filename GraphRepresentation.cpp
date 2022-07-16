@@ -163,9 +163,9 @@ void GraphRepresentation::setInitialAnimation(QQueue<Node*> nodesToColor, QQueue
 
     for(auto const &e : edgesToColor) {
         QPropertyAnimation *edgeAnim = new QPropertyAnimation(e, "color");
-        edgeAnim->setStartValue(QColor(Qt::gray));
+        edgeAnim->setStartValue(QColor(Qt::red));
         edgeAnim->setDuration(500);
-        edgeAnim->setEndValue(QColor(Qt::transparent));
+        edgeAnim->setEndValue(QColor(Qt::black));
         initialAnimation->addAnimation(edgeAnim);
     }
 }
@@ -204,13 +204,7 @@ void GraphRepresentation::setAlgorithmAnimationPanel()
 
 void GraphRepresentation::advanceUserInstructions()
 {
-    if(userInstructions->currentIndex() < userInstructions->count() - 1) {
-        userInstructions->setCurrentIndex(userInstructions->currentIndex() + 1);
-    }
-    else if (userInstructions->currentIndex() == userInstructions->count() - 1){
-        userInstructions->setCurrentIndex(userInstructions->currentIndex() + 1);
-        animationState = false;
-    }
+    userInstructions->setCurrentIndex(userInstructions->currentIndex() + 1);
 }
 
 void GraphRepresentation::returnToBuildMode()
@@ -264,13 +258,22 @@ void GraphRepresentation::drawAlgorithmAnimationPanel()
     graphToolBar->hide();
     this->resetRadioButtons();
 
-    userInstructions->show();
+    algorithmType aType = static_cast<algorithmType>(algorithmComboBox->currentData().toInt());
+
+    switch(aType) {
+        case primsmst:
+            break;
+        default:
+            userInstructions->show();
+    }
 
     quitAnimationButton->show();
 }
 
 void GraphRepresentation::showNodeColoringAnimation(QQueue<Node*> nodesToColor, QQueue<Edge*> edgesToColor)
 {
+    animationState = false;
+
     setInitialAnimation(nodesToColor, edgesToColor);
 
     QQueue<Edge*>::const_iterator edgeIte = edgesToColor.constBegin();

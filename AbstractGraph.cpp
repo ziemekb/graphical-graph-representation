@@ -211,23 +211,37 @@ void AbstractGraph::receiveNode(Node *node)
         break;
     }
 
-    algorithmStartingNode = nullptr;
-    algorithmEndingNode = nullptr;
-    resetVisited();
-    nodesToColor.clear();
-    edgesToColor.clear();
+    resetAlgorithm();
 }
 
 void AbstractGraph::getAlgorithmType(algorithmType aType)
-{
+{ 
     this->aType = aType;
+
+
+    // if no nodes are needed for an algorithm running algorithm can be handles right after clicking start algorithm button
+    switch(aType) {
+    case primsmst:
+        this->primMST();
+        break;
+    default:
+        break;
+    }
+
+    resetAlgorithm();
 }
 
-void AbstractGraph::resetVisited()
+void AbstractGraph::resetAlgorithm()
 {
+    algorithmStartingNode = nullptr;
+    algorithmEndingNode = nullptr;
+
     for(auto const &e : getKeys()) {
         visited[e] = false;
     }
+
+    nodesToColor.clear();
+    edgesToColor.clear();
 }
 
 void AbstractGraph::reverseQueue(QQueue<Node*> &queue)
