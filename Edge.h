@@ -16,6 +16,7 @@ public:
 
     Node *startingNode;
     Node *endingNode;
+
     int getWeight();
     void setWeight(int weight);
     void setPen(const QPen &pen);

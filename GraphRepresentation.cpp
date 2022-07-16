@@ -225,7 +225,7 @@ void GraphRepresentation::placeGraphicsItem(QGraphicsItem *item)
     Node *node = dynamic_cast<Node*>(item);
 
     if(edge) {
-        if(graph->containsEdge(edge)) {
+        if(graph->containsEdge(edge) || edge->startingNode == edge->endingNode) {
             edge->disconnect();
             edge->deleteLater();
             return;
