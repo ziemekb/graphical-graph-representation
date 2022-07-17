@@ -30,6 +30,7 @@ Edge::Edge(Node *startingNode, Node *endingNode)
         weightText = new WeightText(this);
         weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2 - weightText->boundingRect().width()/2,
                            qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - weightText->boundingRect().height()/2);
+        connect(weightText, &WeightText::weightChange, this, &Edge::setWeight);
     }
     else {
         weightText = nullptr;
@@ -69,7 +70,7 @@ Edge::~Edge()
 
 int Edge::getWeight()
 {
-    return weightText->getWeight();
+    return this->weight;
 }
 
 void Edge::setWeight(int weight)

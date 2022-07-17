@@ -19,7 +19,6 @@ public:
     Node *endingNode;
 
     int getWeight();
-    void setWeight(int weight);
     void setPen(const QPen &pen);
 
     void setColor(QColor color);
@@ -40,6 +39,7 @@ private:
 
 public slots:
     void receiveGraphType(graphType type);
+    void setWeight(int weight);
 };
 
 #endif // EDGE_H

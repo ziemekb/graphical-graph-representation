@@ -5,10 +5,10 @@
 #include <QTextCursor>
 
 class WeightText : public QGraphicsTextItem {
+    Q_OBJECT
 public:
     WeightText(QGraphicsItem *parent = nullptr);
     void setWeight(int weight);
-    int getWeight();
 
 private:
     QTextCursor cursor;
@@ -16,6 +16,9 @@ private:
 
     void setWeightFromText();
     int weight;
+
+signals:
+    void weightChange(int weight);
 };
 
 #endif // WEIGHTTEXT_H
