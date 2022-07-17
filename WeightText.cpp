@@ -1,5 +1,6 @@
 #include <QTextDocument>
 #include <QTextCharFormat>
+#include <QKeyEvent>
 #include "WeightText.h"
 
 WeightText::WeightText(QGraphicsItem *parent) : QGraphicsTextItem(parent)
@@ -8,9 +9,11 @@ WeightText::WeightText(QGraphicsItem *parent) : QGraphicsTextItem(parent)
     weightDocument = new QTextDocument;
 
     QTextCharFormat charFormat;
-    charFormat.setFont(QFont("Helvetica", 12));
+    QFont font("Monospace", 12);
+    font.setBold(true);
+    charFormat.setFont(font);
 
-    QPen outlinePen = QPen (QColor(200, 200, 200), 0.5, Qt::SolidLine);
+    QPen outlinePen = QPen (QColor(255, 255, 255), 0.75, Qt::SolidLine);
     charFormat.setTextOutline(outlinePen);
 
     cursor = QTextCursor(weightDocument);
@@ -41,4 +44,22 @@ void WeightText::setWeightFromText()
     else {
         this->setPlainText(QString::number(this->weight));
     }
+}
+
+bool WeightText::sceneEvent(QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*> (event);
+
+        switch (keyEvent->key()) {
+        case Qt::Key_Space:
+        case Qt::Key_Tab:
+        case Qt::Key_Return:
+            return true;
+            break;
+        default:
+            break;
+        }
+    }
+    return QGraphicsTextItem::sceneEvent(event);
 }

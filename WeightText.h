@@ -17,6 +17,9 @@ private:
     void setWeightFromText();
     int weight;
 
+protected:
+    bool sceneEvent(QEvent *event) override;
+
 signals:
     void weightChange(int weight);
 };
