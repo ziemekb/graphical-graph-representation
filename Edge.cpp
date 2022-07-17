@@ -1,6 +1,8 @@
-#include "Edge.h"
 #include <QTextDocument>
 #include <QtMath>
+#include <QTextCharFormat>
+#include <QTextCursor>
+#include "Edge.h"
 
 graphType Edge::type;
 const qreal Edge::arrowAngle = 30;
@@ -25,13 +27,9 @@ Edge::Edge(Node *startingNode, Node *endingNode)
     this->weight = 1;
 
     if(type == weightedUndirected || type == weightedDirected) {
-        weightText = new QGraphicsTextItem(this);
-        weightText->setPlainText(QString::number(weight));
-        weightText->setTextInteractionFlags(Qt::TextEditorInteraction);
-        //weightText->setRotation(-this->line().angle() + 180);
-        weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2,
-                           qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - 25);
-        connect(weightText->document(), &QTextDocument::contentsChanged, this, &Edge::setWeightFromText);
+        weightText = new WeightText(this);
+        weightText->setPos(qFabs(startingNode->getCenter().x() + endingNode->getCenter().x())/2 - weightText->boundingRect().width()/2,
+                           qFabs(startingNode->getCenter().y() + endingNode->getCenter().y())/2 - weightText->boundingRect().height()/2);
     }
     else {
         weightText = nullptr;
@@ -71,7 +69,7 @@ Edge::~Edge()
 
 int Edge::getWeight()
 {
-    return this->weight;
+    return weightText->getWeight();
 }
 
 void Edge::setWeight(int weight)
@@ -106,20 +104,6 @@ void Edge::setColor(QColor color)
 QColor Edge::getColor()
 {
     return this->pen().color();
-}
-
-void Edge::setWeightFromText()
-{
-    bool ok;
-
-    int tempWeight = weightText->toPlainText().QString::toInt(&ok);
-
-    if(ok) {
-        setWeight(tempWeight);
-    }
-    else {
-        weightText->setPlainText(QString::number(this->weight));
-    }
 }
 
 QLineF Edge::shortenQLineF(QPointF startingPoint, QPointF endingPoint)

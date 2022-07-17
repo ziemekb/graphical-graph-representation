@@ -23,6 +23,7 @@ SOURCES += \
         PhantomEdge.cpp \
         UnweightedDirectedGraph.cpp \
         UnweightedUndirectedGraph.cpp \
+        WeightText.cpp \
         WeightedDirectedGraph.cpp \
         WeightedUndirectedGraph.cpp \
         main.cpp
@@ -47,6 +48,7 @@ HEADERS += \
     PhantomEdge.h \
     UnweightedDirectedGraph.h \
     UnweightedUndirectedGraph.h \
+    WeightText.h \
     WeightedDirectedGraph.h \
     WeightedUndirectedGraph.h
 

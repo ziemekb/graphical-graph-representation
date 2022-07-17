@@ -5,6 +5,7 @@
 #include <QGraphicsTextItem>
 #include "Node.h"
 #include "MainWindow.h"
+#include "WeightText.h"
 
 class Edge : public QObject, public QGraphicsLineItem {
     Q_OBJECT
@@ -27,7 +28,7 @@ public:
 private:
     static graphType type;
     int weight;
-    QGraphicsTextItem *weightText;
+    WeightText *weightText;
     void setWeightFromText();
 
     QLineF shortenQLineF(QPointF startingPoint, QPointF endingPoint);
