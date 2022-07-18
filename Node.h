@@ -14,8 +14,6 @@ public:
     static int nodeCount;
     static constexpr int nodeWidth = 75;
     static constexpr int nodeHeight = 75;
-    static bool greaterNode(Node* firstNode, Node* secondNode);
-    static bool lesserNode(Node* firstNode, Node* secondNode);
 
     Node();
     Node(QPointF center);
