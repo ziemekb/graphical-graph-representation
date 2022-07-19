@@ -148,7 +148,8 @@ void AbstractGraph::primMST()
         return;
     }
 
-    pq.push(std::make_pair(node, new Edge));
+    Edge *dummyEdge = new Edge;
+    pq.push(std::make_pair(node, dummyEdge));
 
     while(!pq.empty()) {
 
@@ -175,6 +176,7 @@ void AbstractGraph::primMST()
 
     //first added edge is a dummy edge thus getting rid of it
     edgesToColor.pop_front();
+    dummyEdge->deleteLater();
 
     emit graphColoringSignal(nodesToColor, edgesToColor);
 }
