@@ -15,7 +15,8 @@ enum algorithmType {
     dfs,
     bfs,
     dijkstras,
-    primsmst
+    primsmst,
+    hamcycle
 };
 
 class AbstractGraph : public QObject {
@@ -30,6 +31,8 @@ public:
     void BFS(Node* firstNode, Node* searchedNode);
     void dijkstra(Node* firstNode, Node* secondNode);
     void primMST();
+    void hamiltonianCycle();
+    void hamiltonianBacktrack(QHash<Node*, Node*> &parent, Node *firstNode, Node *node, int visitedNumber);
     QList<Node*> getKeys();
 
 signals:

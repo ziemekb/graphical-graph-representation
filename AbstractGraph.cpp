@@ -178,6 +178,51 @@ void AbstractGraph::primMST()
     emit graphColoringSignal(nodesToColor, edgesToColor);
 }
 
+void AbstractGraph::hamiltonianCycle()
+{
+    QHash<Node*, Node*> parent;
+
+    for(auto const &e : this->getKeys()) {
+        visited[e] = true;
+        hamiltonianBacktrack(parent, e, e, 1);
+        break;
+    }
+}
+
+void AbstractGraph::hamiltonianBacktrack(QHash<Node*, Node*> &parent, Node *firstNode, Node *node, int visitedNumber)
+{
+    QHash<Node*, Edge*>::const_iterator i;
+
+    for(i = adjList[node].constBegin(); i != adjList[node].constEnd(); ++i) {
+        if(!nodesToColor.empty()) {
+            break;
+        }
+        else if(!visited[i.key()]) {
+            visited[i.key()] = true;
+            parent[node] = i.key();
+            hamiltonianBacktrack(parent, firstNode, i.key(), visitedNumber + 1);
+            visited[i.key()] = false;
+        }
+        else if(firstNode == i.key() && this->getKeys().size() == visitedNumber) {
+            parent[node] = i.key();
+
+            node = parent[node];
+            edgesToColor.enqueue(adjList[node][parent[node]]);
+            nodesToColor.enqueue(node);
+            node = parent[node];
+
+            while(node != firstNode) {
+                edgesToColor.enqueue(adjList[node][parent[node]]);
+                nodesToColor.enqueue(node);
+                node = parent[node];
+            }
+
+            emit graphColoringSignal(nodesToColor, edgesToColor);
+            return;
+        }
+    }
+}
+
 QList<Node*> AbstractGraph::getKeys()
 {
     return adjList.keys();
@@ -222,6 +267,9 @@ void AbstractGraph::getAlgorithmType(algorithmType aType)
     switch(aType) {
     case primsmst:
         this->primMST();
+        break;
+    case hamcycle:
+        this->hamiltonianCycle();
         break;
     default:
         break;
