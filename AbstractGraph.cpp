@@ -142,12 +142,13 @@ void AbstractGraph::primMST()
         present[e] = false;
     }
 
-    for(auto const &e : this->getKeys()) {
-        if(!adjList[e].empty()) {
-            pq.push(std::make_pair(e, new Edge));
-            break;
-        }
+    Node *node = getLowestKey();
+
+    if(!node) {
+        return;
     }
+
+    pq.push(std::make_pair(node, new Edge));
 
     while(!pq.empty()) {
 
@@ -182,10 +183,11 @@ void AbstractGraph::hamiltonianCycle()
 {
     QHash<Node*, Node*> parent;
 
-    for(auto const &e : this->getKeys()) {
-        visited[e] = true;
-        hamiltonianBacktrack(parent, e, e, 1);
-        break;
+    Node *node = getLowestKey();
+
+    if(node) {
+        visited[node] = true;
+        hamiltonianBacktrack(parent, node, node, 1);
     }
 }
 
@@ -289,6 +291,21 @@ void AbstractGraph::resetAlgorithm()
 
     nodesToColor.clear();
     edgesToColor.clear();
+}
+
+Node *AbstractGraph::getLowestKey()
+{
+    Node *minNode = nullptr;
+    int minNodeData = INT_MAX;
+
+    for(auto const &e : getKeys()) {
+        if(e->getData() < minNodeData) {
+            minNode = e;
+            minNodeData = minNode->getData();
+        }
+    }
+
+    return minNode;
 }
 
 template <typename T>

@@ -52,6 +52,7 @@ protected:
 
 private:
     void resetAlgorithm();
+    Node *getLowestKey();
 
     template <typename T>
     void reverseQueue(QQueue<T*> &queue);
