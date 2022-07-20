@@ -35,7 +35,6 @@ private:
     void generateToolBar(const graphType type);
 
     AlgorithmComboBox *algorithmComboBox;
-    //const QStringList algorithmTypes = {"DFS", "BFS", "Dijkstra"};
     QPushButton *startAlgorithmButton;
 
     BuildToolsManager buildToolsManager;

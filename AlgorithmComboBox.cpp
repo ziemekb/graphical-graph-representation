@@ -1,5 +1,12 @@
 #include "AlgorithmComboBox.h"
 
+AlgorithmComboBox::AlgorithmComboBox()
+{
+    foreach(Algorithm alg, algorithms) {
+        this->addItem(alg.name, alg.type);
+    }
+}
+
 void AlgorithmComboBox::showPopup()
 {
     QComboBox::showPopup();

@@ -111,12 +111,6 @@ void GraphRepresentation::generateToolBar(const graphType type)
     //Adding QComboBox with available algorithms
     algorithmComboBox = new AlgorithmComboBox;
 
-    algorithmComboBox->addItem("DFS", dfs);
-    algorithmComboBox->addItem("BFS", bfs);
-    algorithmComboBox->addItem("Dijkstra's", dijkstras);
-    algorithmComboBox->addItem("Prim's MST", primsmst);
-    algorithmComboBox->addItem("Hamiltonian Cycle", hamcycle);
-
     graphToolBar->addWidget(algorithmComboBox);
 
     graphToolBar->addSeparator();
