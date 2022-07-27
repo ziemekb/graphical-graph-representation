@@ -2,6 +2,7 @@
 #include <QtMath>
 #include <QTextCharFormat>
 #include <QTextCursor>
+#include <QPainter>
 #include "Edge.h"
 
 graphType Edge::type;
@@ -37,6 +38,9 @@ Edge::Edge(Node *startingNode, Node *endingNode)
     }
 
     if(type == weightedDirected || type == unweightedDirected) {
+
+        paintArc();
+
         leftArrow = new QGraphicsLineItem(this);
         rightArrow = new QGraphicsLineItem(this);
 
@@ -105,6 +109,33 @@ void Edge::setColor(QColor color)
 QColor Edge::getColor()
 {
     return this->pen().color();
+}
+
+void Edge::paintArc()
+{
+    QLineF shortLine(shortenQLineF(startingNode->getCenter(), endingNode->getCenter()));
+    QPointF betweenPoint(qFabs(shortLine.p1().x() + shortLine.p2().x()) / 2,
+                         qFabs(shortLine.p1().y() + shortLine.p2().y()) / 2);
+
+    qreal distance = shortLine.length();
+    qreal radius = (distance / 2.0) / qSin(qDegreesToRadians(30));
+    qreal diagonal = qSqrt(radius * radius - distance * distance / 4);
+
+    qreal x_a = betweenPoint.x() - shortLine.p1().x();
+    qreal y_a = betweenPoint.y() - shortLine.p1().y();
+
+    QPointF center(betweenPoint.x() + y_a * (diagonal/distance),
+                   betweenPoint.y() - x_a * (diagonal/distance));
+
+    QPointF cornerPoint(center.x() + radius, center.y() + radius);
+
+    QRectF rect(cornerPoint.x(), cornerPoint.y(), 2 * radius, 2 * radius);
+
+    int startAngle = 16 * QLineF(shortLine.p1(), center).angle();
+    int spanAngle = 16 * 30;
+
+    QPainter painter;
+    painter.drawArc(rect, startAngle, spanAngle);
 }
 
 QLineF Edge::shortenQLineF(QPointF startingPoint, QPointF endingPoint)

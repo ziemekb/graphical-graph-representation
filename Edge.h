@@ -29,6 +29,7 @@ private:
     int weight;
     WeightText *weightText;
     void setWeightFromText();
+    void paintArc();
 
     QLineF shortenQLineF(QPointF startingPoint, QPointF endingPoint);
 
