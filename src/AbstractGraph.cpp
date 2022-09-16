@@ -255,7 +255,7 @@ void AbstractGraph::receiveNode(Node *node)
         this->primMST();
         break;
     default:
-        qDebug() << "unknown algorithm type";
+        //qDebug() << "unknown algorithm type";
         break;
     }
 

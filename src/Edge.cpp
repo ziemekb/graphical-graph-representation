@@ -118,7 +118,7 @@ void Edge::paintArc()
                          qFabs(shortLine.p1().y() + shortLine.p2().y()) / 2);
 
     qreal distance = shortLine.length();
-    qreal radius = (distance / 2.0) / qSin(qDegreesToRadians(30));
+    qreal radius = (distance / 2.0) / qSin(qDegreesToRadians(static_cast<double>(30)));
     qreal diagonal = qSqrt(radius * radius - distance * distance / 4);
 
     qreal x_a = betweenPoint.x() - shortLine.p1().x();

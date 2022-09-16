@@ -8,6 +8,7 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+VPATH += ./src
 SOURCES += \
         AbstractGraph.cpp \
         AlgorithmComboBox.cpp \
@@ -33,24 +34,25 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+VPATH += ./src
 HEADERS += \
-    AbstractGraph.h \
-    AlgorithmComboBox.h \
-    BuildToolsManager.h \
-    DestructionCursor.h \
-    Edge.h \
-    GraphFactory.h \
-    GraphRepresentation.h \
-    MainMenu.h \
-    MainWindow.h \
-    Node.h \
-    NodeCursor.h \
-    PhantomEdge.h \
-    UnweightedDirectedGraph.h \
-    UnweightedUndirectedGraph.h \
-    WeightText.h \
-    WeightedDirectedGraph.h \
-    WeightedUndirectedGraph.h
+    	AbstractGraph.h \
+	AlgorithmComboBox.h \
+    	BuildToolsManager.h \
+	DestructionCursor.h \
+	Edge.h \
+	GraphFactory.h \
+	GraphRepresentation.h \
+	MainMenu.h \
+	MainWindow.h \
+	Node.h \
+	NodeCursor.h \
+	PhantomEdge.h \
+	UnweightedDirectedGraph.h \
+	UnweightedUndirectedGraph.h \
+	WeightText.h \
+	WeightedDirectedGraph.h \
+	WeightedUndirectedGraph.h
 
 RESOURCES += \
     resources.qrc

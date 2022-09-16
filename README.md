@@ -11,7 +11,7 @@ Example of a undirected and weighted graph with Dijkstra's algorithm performed o
 ### Linux
 To run the program you need working installation of Qt.
 
-clone the repo on your local machine:
+Clone the repo on your local machine:
   ```
   git clone https://github.com/ziemekb/graphical-graph-representation.git
   ```
